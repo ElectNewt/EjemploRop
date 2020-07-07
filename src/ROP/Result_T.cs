@@ -9,16 +9,16 @@ namespace ROP
 
         public static implicit operator Result<T>(T value) => new Result<T>(value);
 
-        public readonly ImmutableArray<string> Errors;
+        public readonly ImmutableArray<Error> Errors;
         public bool Success => Errors.Length == 0;
         
         public Result(T value)
         {
             Value = value;
-            Errors = ImmutableArray<string>.Empty;
+            Errors = ImmutableArray<Error>.Empty;
         }
        
-        public Result(ImmutableArray<string> errors)
+        public Result(ImmutableArray<Error> errors)
         {
             if (errors.Length == 0)
             {

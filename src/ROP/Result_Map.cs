@@ -4,14 +4,14 @@ using System.Threading.Tasks;
 
 namespace ROP
 {
-    public static class Result_Bind
+    public static class Result_Map
     {
-        public static Result<U> Bind<T, U>(this Result<T> r, Func<T, Result<U>> method)
+        public static Result<U> Map<T, U>(this Result<T> r, Func<T, U> mapper)
         {
             try
             {
                 return r.Success
-                    ? method(r.Value)
+                    ? Result.Success(mapper(r.Value))
                     : Result.Failure<U>(r.Errors);
             }
             catch (Exception e)
@@ -21,14 +21,13 @@ namespace ROP
             }
         }
 
-
-        public static async Task<Result<U>> Bind<T, U>(this Task<Result<T>> result, Func<T, Task<Result<U>>> method)
+        public static async Task<Result<U>> MapAsync<T, U>(this Task<Result<T>> result, Func<T, Task<U>> mapper)
         {
             try
             {
                 var r = await result;
                 return r.Success
-                    ? await method(r.Value)
+                    ? Result.Success(await mapper(r.Value))
                     : Result.Failure<U>(r.Errors);
             }
             catch (Exception e)

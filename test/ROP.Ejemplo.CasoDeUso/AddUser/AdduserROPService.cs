@@ -5,7 +5,6 @@ using System.Collections.Immutable;
 
 namespace ROP.Ejemplo.CasoDeUso.AddUser
 {
-
     public interface IAdduserROPServiceDependencies
     {
         Result<bool> AddUser(UserAccount userAccount);
@@ -30,14 +29,14 @@ namespace ROP.Ejemplo.CasoDeUso.AddUser
 
         private Result<UserAccount> ValidateUser(UserAccount userAccount)
         {
-            List<string> errores = new List<string>();
+            List<Error> errores = new List<Error>();
 
             if (string.IsNullOrWhiteSpace(userAccount.FirstName))
-                errores.Add("El nombre propio no puede estar vacio");
+                errores.Add(Error.Create("El nombre propio no puede estar vacio"));
             if (string.IsNullOrWhiteSpace(userAccount.LastName))
-                errores.Add("El apellido propio no puede estar vacio");
+                errores.Add(Error.Create("El apellido propio no puede estar vacio"));
             if (string.IsNullOrWhiteSpace(userAccount.UserName))
-                errores.Add("El nombre de usuario no debe estar vacio");
+                errores.Add(Error.Create("El nombre de usuario no debe estar vacio"));
 
             return errores.Any() 
                 ? Result.Failure<UserAccount>(errores.ToImmutableArray()) 
