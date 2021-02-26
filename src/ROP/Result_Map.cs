@@ -21,7 +21,7 @@ namespace ROP
             }
         }
 
-        public static async Task<Result<U>> MapAsync<T, U>(this Task<Result<T>> result, Func<T, Task<U>> mapper)
+        public static async Task<Result<U>> Map<T, U>(this Task<Result<T>> result, Func<T, Task<U>> mapper)
         {
             try
             {

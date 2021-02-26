@@ -33,10 +33,5 @@ namespace ROP
         {
             return (await result).Throw();
         }
-      
-        public static Task ThrowAsync(this Task<Result<Unit>> result)
-        {
-            return result.ThrowAsync<Unit>();
-        }
     }
 }

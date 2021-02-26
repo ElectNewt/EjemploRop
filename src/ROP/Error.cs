@@ -6,15 +6,15 @@ namespace ROP
     public class Error
     {
         public readonly string Message;
-        public readonly int? ErrorCode;
+        public readonly Guid? ErrorCode;
 
-        private Error(string message, int? errorCode)
+        private Error(string message, Guid? errorCode)
         {
             Message = message;
             ErrorCode = errorCode;
         }
 
-        public static Error Create(string message, int? errorCode = null)
+        public static Error Create(string message, Guid? errorCode = null)
         {
             return new Error(message, errorCode);
         }

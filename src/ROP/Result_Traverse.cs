@@ -63,23 +63,5 @@ namespace ROP
                 throw;
             }
         }
-
-        /// <summary>
-        /// Convierte IEnumerable<Result<T>> a Result<T>>
-        /// </summary>
-        public static Result<Unit> TraverseUnit(this IEnumerable<Result<Unit>> results)
-        {
-            try
-            {
-                return results.Traverse().Map(MapToSingle);
-            }
-            catch (Exception e)
-            {
-                ExceptionDispatchInfo.Capture(e).Throw();
-                throw;
-            }
-
-            Unit MapToSingle(List<Unit> _) => Unit.Value;
-        }
     }
 }
