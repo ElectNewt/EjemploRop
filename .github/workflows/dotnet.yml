@@ -1,4 +1,4 @@
-name: .NET
+name: Pipeline
 
 on:
   push:
@@ -18,12 +18,13 @@ jobs:
       with:
         dotnet-version: 5.0.x
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore 
     - name: Build
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
     - name: publish into nuget
+      uses: rohith/publish-nuget@v2
       with:
         PROJECT_FILE_PATH: src/ROP/ROP.csproj
         TAG_FORMAT: '*'
