@@ -7,10 +7,8 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
-
+  build & Test:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
     - name: Setup .NET
@@ -23,9 +21,13 @@ jobs:
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
-    - name: publish into nuget
-      uses: rohith/publish-nuget@v2
-      with:
+
+  Publish into Nuget:
+    runs-on: ubuntu-latest
+    steps:
+     - name: publish into nuget
+     - uses: rohith/publish-nuget@v2
+       with:
         PROJECT_FILE_PATH: src/ROP/ROP.csproj
         TAG_FORMAT: '*'
         NUGET_KEY: ${{secrets.NUGET_API_KEY}}
