@@ -1,9 +1,18 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <PackageId>Netmentor.ROP</PackageId>
+    <Version>1.0.1</Version>
+    <Authors>Ivan Abad  </Authors>
+    <Company>NetMentor</Company>
+    <Description>Library to handle errors in C# in a more functional way in Railway oriented programming. based on Scott Wlaschin's Idea. </Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/ElectNewt/EjemploRop</RepositoryUrl>
   </PropertyGroup>
+    
+  
 
   <ItemGroup>
     <PackageReference Include="System.Collections.Immutable" Version="1.7.1" />
