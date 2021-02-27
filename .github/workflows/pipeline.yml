@@ -26,7 +26,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
      - name: publish into nuget
-     - uses: rohith/publish-nuget@v2
+       uses: brandedoutcast/publish-nuget@v2.5.5
        with:
         PROJECT_FILE_PATH: src/ROP/ROP.csproj
         TAG_FORMAT: '*'
