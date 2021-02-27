@@ -7,7 +7,7 @@ on:
     branches: [ master ]
 
 jobs:
-  Build_and_Test:
+  Pipeline:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -21,13 +21,9 @@ jobs:
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
-
-  Publish_Into_Nuget:
-    runs-on: ubuntu-latest
-    steps:
-     - name: publish into nuget
-       uses: brandedoutcast/publish-nuget@v2.5.5
-       with:
+    - name: publish into nuget
+      uses: brandedoutcast/publish-nuget@v2.5.5
+      with:
         PROJECT_FILE_PATH: src/ROP/ROP.csproj
         TAG_FORMAT: '*'
         NUGET_KEY: ${{secrets.NUGET_API_KEY}}
