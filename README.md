@@ -10,7 +10,7 @@ This code does references the post [Railway oriented programming](https://www.ne
 
 | Pacakge in nuget        | .NET Standard | 
 | ------------- |:-------------:|
-| [Netmetnor.ROP](https://www.nuget.org/packages/Netmentor.ROP)      | 2.0 | 
+| [Netmetnor.DiContainer](https://www.nuget.org/packages/Netmentor.DiContainer/)      | 2.1 | 
 
 
 ## Issues and contributing
