@@ -19,7 +19,7 @@ namespace ROP.UnitTest
         protected Task<Result<int>> StringIntoIntAsync(string s)
             => StringIntoInt(s).Async();
         protected Result<int> StringIntoIntFailure(string s)
-            => Result.Failure<int>("There is an error");
+            => Result.NotFound<int>("There is an error");
         protected Task<Result<int>> StringIntoIntAsyncFailure(string s)
             => StringIntoIntFailure(s).Async();
     }

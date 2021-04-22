@@ -24,7 +24,7 @@ namespace ROP
                 if (!r2.Success)
                     return r2.Errors;
 
-                return Result.Failure<(T1, T2)>(r1.Errors.Concat(r2.Errors).ToImmutableArray());
+                return Result.Failure<(T1, T2)>(r1.Errors.Concat(r2.Errors).ToImmutableArray(), r1.HttpStatusCode);
             }
             catch (Exception e)
             {
@@ -51,7 +51,7 @@ namespace ROP
                 if (!r2.Success)
                     return r2.Errors;
 
-                return Result.Failure<(T1, T2)>(r1.Errors.Concat(r2.Errors).ToImmutableArray());
+                return Result.Failure<(T1, T2)>(r1.Errors.Concat(r2.Errors).ToImmutableArray(), r1.HttpStatusCode);
             }
             catch (Exception e)
             {

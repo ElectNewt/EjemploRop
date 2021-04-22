@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Runtime.ExceptionServices;
 using System.Threading.Tasks;
 
@@ -11,8 +12,8 @@ namespace ROP
             try
             {
                 return r.Success
-                    ? method(r.Value)
-                    : Result.Failure<U>(r.Errors);
+                    ? method(r.Value)//.UseSuccessHttpStatusCode(r.HttpStatusCode)
+                    : Result.Failure<U>(r.Errors, r.HttpStatusCode);
             }
             catch (Exception e)
             {
@@ -29,7 +30,7 @@ namespace ROP
                 var r = await result;
                 return r.Success
                     ? await method(r.Value)
-                    : Result.Failure<U>(r.Errors);
+                    : Result.Failure<U>(r.Errors, r.HttpStatusCode);
             }
             catch (Exception e)
             {

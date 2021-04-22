@@ -238,7 +238,6 @@ Result<List<NetMentorAccount>> result = GetUsersByIds(arrayIds) //<- assuing Get
 `````
 
 #### UseSuccessHttpStatusCode
-**TODO: This part is pending to be implemted in the code**
 In most of our use cases, we return the information using an API, and it is not always the same status code, so for that reason, we allow to change this status code when the chain is a success.
 ````csharp
 Result<ValidationResult> result = ValidateNewAccount(account)
@@ -259,7 +258,6 @@ To create the errors you have to use the factory method: `Error  Create(string m
 But when you do `Result.Failure<T>("errorMessage")` it creates the error automatically.
 
 #### Error status codes
-**TODO: This part is pending to be implemted in the code**
 As there is a possibility with `UseSuccessHttpStatusCode` of setting up a success status code, there is also a way to set up a failure status code.
 
 If you remember, when we create an error, we do it with `Result.Failure<T>(Error)` this generates a status code of  `HttpStatusCode.UnprocessableEntity` (422)
@@ -281,7 +279,6 @@ Result.Conflict<T>(Error)
 `````
 
 ### Response from an API
-**TODO: This part is pending to be implemted in the code**
 As we mentioned, most of our use cases are API calls, which means we have to return this information from an API.
 
 To achieve this goal first of all you have to install the package `Common.API` from nexus.
@@ -297,8 +294,6 @@ public async Task<IActionResult> CreateNewAccount(Account account)
 If `Result` is a success, it will return the status code set with `UseSuccessHttpStatusCode` (or the default 422 if not set), and if the `Result` is not successful, it will return the one set when you specified the error.
 
 #### ResultDto
-
-**TODO: This part is pending to be implemted in the code**
 During the execution of `.ToActionResult()` result gets converted into a `Data Transfer Object` (Dto) for that reason it returns a `ResultDto`.
 - Note: We mainly did it due to serialisation issues with immutable classes in C#.
 

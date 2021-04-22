@@ -12,7 +12,7 @@ namespace ROP
             {
                 return r.Success
                     ? Result.Success(mapper(r.Value))
-                    : Result.Failure<U>(r.Errors);
+                    : Result.Failure<U>(r.Errors, r.HttpStatusCode);
             }
             catch (Exception e)
             {
@@ -28,7 +28,7 @@ namespace ROP
                 var r = await result;
                 return r.Success
                     ? Result.Success(await mapper(r.Value))
-                    : Result.Failure<U>(r.Errors);
+                    : Result.Failure<U>(r.Errors, r.HttpStatusCode);
             }
             catch (Exception e)
             {

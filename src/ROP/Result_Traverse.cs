@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Net;
 using System.Runtime.ExceptionServices;
 using System.Threading.Tasks;
 
@@ -18,6 +19,7 @@ namespace ROP
             {
                 List<Error> errors = new List<Error>();
                 List<T> output = new List<T>();
+                HttpStatusCode fristStatusCode = HttpStatusCode.BadRequest;
 
                 foreach (var r in results)
                 {
@@ -27,12 +29,14 @@ namespace ROP
                     }
                     else
                     {
+                        if (errors.Count == 0)
+                            fristStatusCode = r.HttpStatusCode;
                         errors.AddRange(r.Errors);
                     }
                 }
 
                 return errors.Count > 0
-                    ? Result.Failure<List<T>>(errors.ToImmutableArray())
+                    ? Result.Failure<List<T>>(errors.ToImmutableArray(), fristStatusCode)
                     : Result.Success(output);
             }
             catch (Exception e)

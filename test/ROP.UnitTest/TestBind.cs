@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -43,6 +44,7 @@ namespace ROP.UnitTest
             Assert.Equal(default(int), result.Value);
             Assert.Single(result.Errors);
             Assert.Contains("error", result.Errors.First().Message);
+            Assert.Equal(HttpStatusCode.NotFound, result.HttpStatusCode);
         }
 
         [Fact]
