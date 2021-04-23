@@ -16,6 +16,7 @@ namespace ROP
         public static Result<T> Failure<T>(string error) => new Result<T>(ImmutableArray.Create(Error.Create(error)), HttpStatusCode.BadRequest);
 
         public static Result<Unit> Failure(ImmutableArray<Error> errors) => new Result<Unit>(errors, HttpStatusCode.BadRequest);
+
         public static Result<Unit> Failure(ImmutableArray<Error> errors, HttpStatusCode httpStatusCode) => new Result<Unit>(errors, httpStatusCode);
 
         public static Result<Unit> Failure(IEnumerable<Error> errors) => new Result<Unit>(ImmutableArray.Create(errors.ToArray()), HttpStatusCode.BadRequest);

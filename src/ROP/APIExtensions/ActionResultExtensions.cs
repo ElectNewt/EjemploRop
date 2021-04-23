@@ -8,17 +8,17 @@ namespace ROP.APIExtensions
     {
         public static IActionResult ToActionResult<T>(this Result<T> result)
         {
-            return result.ToDto().ToHttpSTatusCode(result.HttpStatusCode);
+            return result.ToDto().ToHttpStatusCode(result.HttpStatusCode);
         }
 
         public static async Task<IActionResult> ToActionResult<T>(this Task<Result<T>> result)
         {
             Result<T> r = await result;
 
-            return r.ToDto().ToHttpSTatusCode(r.HttpStatusCode);
+            return r.ToActionResult();
         }
 
-        private static IActionResult ToHttpSTatusCode<T>(this T resultDto, HttpStatusCode statusCode)
+        private static IActionResult ToHttpStatusCode<T>(this T resultDto, HttpStatusCode statusCode)
         {
             return new ResultWithStatusCode<T>(resultDto, statusCode);
 
