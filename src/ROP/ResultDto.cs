@@ -4,8 +4,8 @@ namespace ROP
 {
     public class ResultDto<T>
     {
-        public T Value { get; private set; }
-        public ImmutableArray<Error> Errors { get; private set; }
+        public T Value { get; set; }
+        public ImmutableArray<Error> Errors { get; set; }
         public bool Success => Errors.Length == 0;
 
         public ResultDto()
