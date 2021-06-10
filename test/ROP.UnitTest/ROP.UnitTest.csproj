@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\ROP.ApiExtensions\ROP.ApiExtensions.csproj" />
     <ProjectReference Include="..\..\src\ROP\ROP.csproj" />
   </ItemGroup>
 
