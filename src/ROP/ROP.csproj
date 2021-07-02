@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <PackageId>Netmentor.ROP</PackageId>
-    <Version>1.0.6</Version>
+    <Version>1.0.7</Version>
     <Authors>Ivan Abad  </Authors>
     <Company>NetMentor</Company>
     <Description>Library to handle errors in C# in a more functional way in Railway oriented programming. based on Scott Wlaschin's Idea. </Description>
