@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Collections.Immutable;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -27,9 +29,21 @@ namespace ROP.APIExtensions
         private static ResultDto<T> ToDto<T>(this Result<T> result)
         {
             if (result.Success)
-                return new ResultDto<T>(result.Value);
+                return new ResultDto<T>()
+                {
+                    Value = result.Value,
+                    Errors = ImmutableArray<ErrorDto>.Empty
+                };
 
-            return new ResultDto<T>(result.Errors);
+            return new ResultDto<T>()
+            {
+                Value = default,
+                Errors = result.Errors.Select(x => new ErrorDto()
+                {
+                    ErrorCode = x.ErrorCode,
+                    Message = x.Message
+                }).ToImmutableArray()
+            };
         }
 
         private class ResultWithStatusCode<T> : ObjectResult

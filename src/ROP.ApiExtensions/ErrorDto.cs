@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ROP
+namespace ROP.APIExtensions
 {
     public class ErrorDto
     {

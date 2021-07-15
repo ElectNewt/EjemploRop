@@ -1,5 +1,7 @@
-﻿using System;
+﻿using ROP.APIExtensions;
+using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
@@ -13,7 +15,11 @@ namespace ROP.UnitTest.Serializer
         [Fact]
         public void Test()
         {
-            ResultDto<PlaceHolder> obj = new ResultDto<PlaceHolder>(new PlaceHolder(1));
+            ResultDto<PlaceHolder> obj = new ResultDto<PlaceHolder>() 
+            { 
+                Value = new PlaceHolder(1), 
+                Errors = ImmutableArray<ErrorDto>.Empty 
+            };
 
             string json = JsonSerializer.Serialize(obj);
 
