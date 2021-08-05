@@ -38,5 +38,23 @@ namespace ROP
                 throw;
             }
         }
+
+
+        public static async Task<Result<U>> Bind<T, U>(this Task<Result<T>> result, Func<T, Result<U>> method)
+        {
+            try
+            {
+                var r = await result;
+
+                return r.Success
+                    ? method(r.Value)
+                    : Result.Failure<U>(r.Errors, r.HttpStatusCode);
+            }
+            catch (Exception e)
+            {
+                ExceptionDispatchInfo.Capture(e).Throw();
+                throw;
+            }
+        }
     }
 }

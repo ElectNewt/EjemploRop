@@ -61,5 +61,21 @@ namespace ROP.UnitTest
             Assert.Contains("error", result.Errors.First().Message);
         }
 
+
+        [Fact]
+        public async Task TestBindWithNonAsyncMethodInTheMiddle()
+        {
+            int originalValue = 1;
+
+            Result<string> result = await IntToStringAsync(originalValue) // <- async value
+                .Bind(StringIntoInt) //<- Sincronous method
+                .Bind(IntToStringAsync); //<- async metohd
+
+            Assert.True(result.Success);
+            Assert.Equal(originalValue.ToString(), result.Value);
+         
+        }
+
+
     }
 }
