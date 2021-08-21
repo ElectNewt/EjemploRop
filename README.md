@@ -11,6 +11,7 @@ This code does references the post [Railway oriented programming](https://www.ne
 | Pacakge in nuget        | .NET Standard | 
 | ------------- |:-------------:|
 | [Netmetnor.ROP](https://www.nuget.org/packages/Netmentor.ROP)      | 2.0 | 
+| [Netmetnor.ROP.ApiExtensions](https://www.nuget.org/packages/Netmentor.ROP.ApiExtensions/)      | 2.0 | 
 
 
 ## Implement Railway Oriented programming into your application
