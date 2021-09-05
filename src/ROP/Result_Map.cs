@@ -20,6 +20,22 @@ namespace ROP
                 throw;
             }
         }
+        
+        public static async Task<Result<U>> Map<T, U>(this Task<Result<T>> result, Func<T, U> mapper)
+        {
+            try
+            {
+                var r = await result;
+                return r.Success
+                    ? Result.Success(mapper(r.Value))
+                    : Result.Failure<U>(r.Errors, r.HttpStatusCode);
+            }
+            catch (Exception e)
+            {
+                ExceptionDispatchInfo.Capture(e).Throw();
+                throw;
+            }
+        }
 
         public static async Task<Result<U>> Map<T, U>(this Task<Result<T>> result, Func<T, Task<U>> mapper)
         {

@@ -33,7 +33,21 @@ namespace ROP.UnitTest
             Assert.True(result.Success);
             Assert.Equal(originalValue, result.Value);
         }
+        
+        [Fact]
+        public async Task TestMapAsyncWithSyncInTheMiddle()
+        {
+            int originalValue = 1;
 
+            Result<List<string>> result = await IntToStringAsync(originalValue)
+                .Map(a=>new List<string>(){a});
+
+            Assert.True(result.Success);
+            Assert.Single(result.Value);
+            Assert.Equal("1", result.Value.First());
+        }
+
+        
         private int MapToInt(string s)
         {
             return Convert.ToInt32(s);
