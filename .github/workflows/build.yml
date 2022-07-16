@@ -34,3 +34,9 @@ jobs:
         PROJECT_FILE_PATH: src/ROP.ApiExtensions/ROP.ApiExtensions.csproj
         TAG_FORMAT: '*'
         NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+    - name: publish ROP.ApiExtensions.Translations into nuget
+      uses: brandedoutcast/publish-nuget@v2.5.5
+      with:
+        PROJECT_FILE_PATH: src/ROP.ApiExtensions.Translations/ROP.ApiExtensions.Translations.csproj
+        TAG_FORMAT: '*'
+        NUGET_KEY: ${{secrets.NUGET_API_KEY}}

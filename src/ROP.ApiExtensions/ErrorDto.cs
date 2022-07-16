@@ -6,6 +6,5 @@ namespace ROP.APIExtensions
     {
         public string Message { get; set; }
         public Guid? ErrorCode { get; set; }
-
     }
 }

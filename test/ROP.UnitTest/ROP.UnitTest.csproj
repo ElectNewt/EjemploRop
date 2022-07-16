@@ -7,6 +7,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
+    <PackageReference Include="Moq" Version="4.18.1" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -19,8 +20,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\ROP.ApiExtensions.Translations\ROP.ApiExtensions.Translations.csproj" />
     <ProjectReference Include="..\..\src\ROP.ApiExtensions\ROP.ApiExtensions.csproj" />
     <ProjectReference Include="..\..\src\ROP\ROP.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="ApiExtensions\Translations\ErrorTranslations.en.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>TraduccionErrores.en.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>
