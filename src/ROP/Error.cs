@@ -19,6 +19,11 @@ namespace ROP
             return new Error(message, errorCode);
         }
 
+        public static Error Create(Guid errorCode)
+        {
+            return Error.Create(string.Empty, errorCode);
+        }
+
         public static IEnumerable<Error> Exception(Exception e)
         {
             if (e is ErrorResultException errs)

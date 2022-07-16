@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Linq;
+using System.Net;
 using Xunit;
 
 namespace ROP.UnitTest.ResultFailure
@@ -9,6 +10,14 @@ namespace ROP.UnitTest.ResultFailure
         public void TestResultOnStringError_ThenStatusCode()
         {
             Result<Unit> result = GetResultWithString();
+            Assert.Equal(GetExpectedHttpStatusCode(), result.HttpStatusCode);
+        }
+        
+        [Fact]
+        public void TestResultOnGuid_ThenMessageIsEmpty()
+        {
+            Result<Unit> result = GetResultWithGuid();
+            Assert.Empty(result.Errors.First().Message);
             Assert.Equal(GetExpectedHttpStatusCode(), result.HttpStatusCode);
         }
 
@@ -55,6 +64,7 @@ namespace ROP.UnitTest.ResultFailure
         }
 
         protected abstract Result<Unit> GetResultWithString();
+        protected abstract Result<Unit> GetResultWithGuid();
         protected abstract Result<Unit> GetResultWithError();
         protected abstract Result<Unit> GetResultWithArray();
         protected abstract Result<Unit> GetResultWithIEnumerable();

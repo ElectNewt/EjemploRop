@@ -8,10 +8,11 @@ This code does references the post [Railway oriented programming](https://www.ne
 
 ## Railway oriented programming en NUGET
 
-| Pacakge in nuget        | .NET Standard | 
-| ------------- |:-------------:|
-| [Netmetnor.ROP](https://www.nuget.org/packages/Netmentor.ROP)      | 2.0 | 
-| [Netmetnor.ROP.ApiExtensions](https://www.nuget.org/packages/Netmentor.ROP.ApiExtensions/)      | 2.0 | 
+| Pacakge in nuget                                                                                                     | .NET Standard | 
+|----------------------------------------------------------------------------------------------------------------------|:-------------:|
+| [Netmetnor.ROP](https://www.nuget.org/packages/Netmentor.ROP)                                                        | 2.0 | 
+| [Netmetnor.ROP.ApiExtensions](https://www.nuget.org/packages/Netmentor.ROP.ApiExtensions/)                           | 2.0 | 
+| [Netmetnor.ROP.ApiExtensions.Translations](https://www.nuget.org/packages/Netmentor.ROP.ApiExtensions.Translations/) | 2.0 | 
 
 
 ## Implement Railway Oriented programming into your application
@@ -299,6 +300,49 @@ During the execution of `.ToActionResult()` result gets converted into a `Data T
 - Note: We mainly did it due to serialisation issues with immutable classes in C#.
 
 
+## Error Translations
+The library can be extended with `ROP.ApiExtensions.Translations` to provide an out of the box functionality to translate errors at serialization time.
+
+You need to create a resource per language you want to support and an empty class with the same name.
+Then If there is an error to be returned in your API it will translate it automatically **IF** the message was left blank.
+
+For example If you Create an error like the following:  
+````csharp
+return Result.Failure(Guid.Parse("ce6887fb-f8fa-49b7-bcb4-d8538b6c9932")).ToActionResult()
+````
+It will look for that guid in the translation file and show the message field as this exampole:
+
+````json
+{
+    "value": null,
+    "errors": [
+        {
+            "ErrorCode": "ce6887fb-f8fa-49b7-bcb4-d8538b6c9932",
+            "Message": "Example message"
+        }
+    ],
+    "success": false
+}
+````
+
+### Add the custom serializer.
+
+You can add it manually with the next command: 
+````csharp
+services.AddControllers().AddJsonOptions(options => 
+    options.JsonSerializerOptions.Converters.Add(new ErrorDtoSerializer<TranslationFile>(httpContextAccessor)));
+````
+But alternatively you can use the following one:
+````csharp
+services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.AddTranslation<TraduccionErrores>(services);
+} );
+````
+
+
+You can find more information in [My blog *in spanish*](https://www.netmentor.es/entrada/custom-json-serializer).
+
 ## Tuples
 [Tuples](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/value-tuples) in C# are a powerful type that allows you to return more than one value in a single response.
 
@@ -334,5 +378,5 @@ You also have the option to name the tuples `SendCode((string UserEmail, string 
 
 ## Issues and contributing
 
-Please do not heasitate in adding some issue or contribute in the code.
+Please do not hesitate in adding some issue or contribute in the code.
 

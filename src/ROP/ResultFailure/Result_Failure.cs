@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Net;
@@ -15,6 +16,8 @@ namespace ROP
 
         public static Result<T> Failure<T>(string error) => new Result<T>(ImmutableArray.Create(Error.Create(error)), HttpStatusCode.BadRequest);
 
+        public static Result<T> Failure<T>(Guid errorCode) => Failure<T>(Error.Create(errorCode));
+
         public static Result<Unit> Failure(ImmutableArray<Error> errors) => new Result<Unit>(errors, HttpStatusCode.BadRequest);
 
         public static Result<Unit> Failure(ImmutableArray<Error> errors, HttpStatusCode httpStatusCode) => new Result<Unit>(errors, httpStatusCode);
@@ -24,6 +27,7 @@ namespace ROP
         public static Result<Unit> Failure(Error error) => new Result<Unit>(ImmutableArray.Create(error), HttpStatusCode.BadRequest);
 
         public static Result<Unit> Failure(string error) => new Result<Unit>(ImmutableArray.Create(Error.Create(error)), HttpStatusCode.BadRequest);
+        public static Result<Unit> Failure(Guid errorCode) => Failure<Unit>(Error.Create(errorCode));
 
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Net;
 
@@ -7,6 +8,7 @@ namespace ROP.UnitTest.ResultFailure
     public class TestResultFailure  : TestBaseResultFailure
     {
         protected override Result<Unit> GetResultWithString() => Result.Failure("Error");
+        protected override Result<Unit> GetResultWithGuid() => Result.Failure(Guid.NewGuid());
         protected override Result<Unit> GetResultWithError() => Result.Failure(Error.Create("error"));
         protected override Result<Unit> GetResultWithArray() => Result.Failure(ImmutableArray.Create(Error.Create("Error")));
         protected override Result<Unit> GetResultWithIEnumerable() => Result.Failure(new List<Error>() {Error.Create("example")});

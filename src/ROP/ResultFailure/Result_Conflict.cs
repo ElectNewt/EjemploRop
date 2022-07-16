@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Net;
@@ -13,6 +14,7 @@ namespace ROP
         public static Result<T> Conflict<T>(Error error) => new Result<T>(ImmutableArray.Create(error), HttpStatusCode.Conflict);
 
         public static Result<T> Conflict<T>(string error) => new Result<T>(ImmutableArray.Create(Error.Create(error)), HttpStatusCode.Conflict);
+        public static Result<T> Conflict<T>(Guid errorCode) => Conflict<T>(Error.Create(errorCode));
 
         public static Result<Unit> Conflict(ImmutableArray<Error> errors) => new Result<Unit>(errors, HttpStatusCode.Conflict);
 
@@ -21,6 +23,6 @@ namespace ROP
         public static Result<Unit> Conflict(Error error) => new Result<Unit>(ImmutableArray.Create(error), HttpStatusCode.Conflict);
 
         public static Result<Unit> Conflict(string error) => new Result<Unit>(ImmutableArray.Create(Error.Create(error)), HttpStatusCode.Conflict);
-
+        public static Result<Unit> Conflict(Guid errorCode) => Conflict<Unit>(Error.Create(errorCode));
     }
 }
