@@ -13,12 +13,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\src\ROP.ApiExtensions\ROP.ApiExtensions.csproj" />
+      <PackageReference Include="Microsoft.Extensions.Localization" Version="6.0.7" />
+      <PackageReference Include="System.Text.Json" Version="6.0.5" />
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.Extensions.Localization" Version="6.0.7" />
-      <PackageReference Include="System.Text.Json" Version="6.0.5" />
+      <ProjectReference Include="..\ROP.ApiExtensions\ROP.ApiExtensions.csproj" />
     </ItemGroup>
 
 </Project>

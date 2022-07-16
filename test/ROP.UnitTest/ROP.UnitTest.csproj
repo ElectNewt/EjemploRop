@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\ROP.ApiExtensions.Translations\ROP.ApiExtensions.Translations.csproj" />
+    <ProjectReference Include="..\..\src\ROP.ApiExtensions.Translations\ROP.ApiExtensions.Translations.csproj" />
     <ProjectReference Include="..\..\src\ROP.ApiExtensions\ROP.ApiExtensions.csproj" />
     <ProjectReference Include="..\..\src\ROP\ROP.csproj" />
   </ItemGroup>

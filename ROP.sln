@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30011.22
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32519.111
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ROP", "src\ROP\ROP.csproj", "{6069CC5A-78CE-4A04-A6DD-DD5CAF17F073}"
 EndProject
@@ -9,9 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ROP.Ejemplo.CasoDeUso", "te
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ROP.UnitTest", "test\ROP.UnitTest\ROP.UnitTest.csproj", "{357A2DA5-9156-48C7-8B48-8746BB4D3220}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ROP.ApiExtensions", "src\ROP.ApiExtensions\ROP.ApiExtensions.csproj", "{0A3923EF-BAE3-4705-81AD-C330DE33EFFD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ROP.ApiExtensions", "src\ROP.ApiExtensions\ROP.ApiExtensions.csproj", "{0A3923EF-BAE3-4705-81AD-C330DE33EFFD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ROP.ApiExtensions.Translations", "ROP.ApiExtensions.Translations\ROP.ApiExtensions.Translations.csproj", "{DBED875A-8FFB-4D70-A944-8AC4E8DC2AC2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ROP.ApiExtensions.Translations", "src\ROP.ApiExtensions.Translations\ROP.ApiExtensions.Translations.csproj", "{F6218AB5-F050-42B5-8849-5B58C0B414B3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +35,10 @@ Global
 		{0A3923EF-BAE3-4705-81AD-C330DE33EFFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A3923EF-BAE3-4705-81AD-C330DE33EFFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0A3923EF-BAE3-4705-81AD-C330DE33EFFD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DBED875A-8FFB-4D70-A944-8AC4E8DC2AC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DBED875A-8FFB-4D70-A944-8AC4E8DC2AC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DBED875A-8FFB-4D70-A944-8AC4E8DC2AC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DBED875A-8FFB-4D70-A944-8AC4E8DC2AC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6218AB5-F050-42B5-8849-5B58C0B414B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6218AB5-F050-42B5-8849-5B58C0B414B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6218AB5-F050-42B5-8849-5B58C0B414B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6218AB5-F050-42B5-8849-5B58C0B414B3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
