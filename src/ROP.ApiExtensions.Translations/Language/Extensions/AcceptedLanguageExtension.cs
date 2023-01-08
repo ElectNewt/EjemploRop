@@ -23,7 +23,7 @@ namespace ROP.ApiExtensions.Translations.Language.Extensions
             {
                 var languages = new List<(string, decimal)>();
                 string acceptedLanguage = header["Accept-Language"];
-                if (acceptedLanguage == null || acceptedLanguage.Length == 0)
+                if (string.IsNullOrEmpty(acceptedLanguage))
                 {
                     return new CultureInfo("es");
                 }

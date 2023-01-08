@@ -21,6 +21,7 @@ namespace ROP.ApiExtensions.Translations.Serializers
         public override ErrorDto Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             string errorMessage = null;
+            string[] translationVariables = null;
             Guid errorCode = Guid.NewGuid();
 
             while (reader.Read())
@@ -49,6 +50,15 @@ namespace ROP.ApiExtensions.Translations.Serializers
                     errorMessage = reader.GetString();
                 }
 
+                if (propertyName == nameof(Error.TranslationVariables))
+                {
+                    using (var jsonDoc = JsonDocument.ParseValue(ref reader))
+                    {
+                        var result = jsonDoc.RootElement.GetRawText();
+                        translationVariables = JsonSerializer.Deserialize<string[]>(result);
+                    }
+                }
+
             }
 
             //theoretically with the translation in place errormessage will never be null
@@ -58,7 +68,7 @@ namespace ROP.ApiExtensions.Translations.Serializers
             return new ErrorDto()
             {
                 ErrorCode = errorCode,
-                Message = errorMessage
+                Message = String.Format(errorMessage, translationVariables ?? new string[0])
             };
         }
 
@@ -69,11 +79,18 @@ namespace ROP.ApiExtensions.Translations.Serializers
             {
                 CultureInfo language = _httpContextAccessor.HttpContext.Request.Headers.GetCultureInfo();
                 errorMessageValue = LocalizationUtils<TTranslationFile>.GetValue(value.ErrorCode.ToString(), language);
+                
+                if (value.TranslationVariables != null)
+                {
+                    errorMessageValue = string.Format(errorMessageValue, (string[])value.TranslationVariables);
+                }
             }
             
             writer.WriteStartObject();
             writer.WriteString(nameof(Error.ErrorCode), value.ErrorCode.ToString());
             writer.WriteString(nameof(Error.Message), errorMessageValue);
+            writer.WritePropertyName(nameof(Error.TranslationVariables));
+            JsonSerializer.Serialize(writer, value.TranslationVariables ?? Array.Empty<string>(), options);
             writer.WriteEndObject();
         }
     }

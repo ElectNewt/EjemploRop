@@ -27,7 +27,7 @@ namespace ROP
         public static Result<Unit> Failure(Error error) => new Result<Unit>(ImmutableArray.Create(error), HttpStatusCode.BadRequest);
 
         public static Result<Unit> Failure(string error) => new Result<Unit>(ImmutableArray.Create(Error.Create(error)), HttpStatusCode.BadRequest);
-        public static Result<Unit> Failure(Guid errorCode) => Failure<Unit>(Error.Create(errorCode));
+        public static Result<Unit> Failure(Guid errorCode, string[] translationVariables = null) => Failure<Unit>(Error.Create(errorCode, translationVariables));
 
     }
 }

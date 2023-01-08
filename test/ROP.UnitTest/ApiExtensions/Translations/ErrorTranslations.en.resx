@@ -21,4 +21,7 @@
     <data name="0b002212-4e6b-4561-96f7-8a06dbc65ac3" xml:space="preserve">
         <value>This is the message Translated</value>
     </data>
+    <data name="a5b62027-9705-40b2-a646-fe91d0353145" xml:space="preserve">
+        <value>message translated with variable of value {0} and a second one {1}</value>
+    </data>
 </root>

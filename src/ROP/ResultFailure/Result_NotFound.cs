@@ -21,7 +21,7 @@ namespace ROP
         public static Result<Unit> NotFound(Error error) => new Result<Unit>(ImmutableArray.Create(error), HttpStatusCode.NotFound);
 
         public static Result<Unit> NotFound(string error) => new Result<Unit>(ImmutableArray.Create(Error.Create(error)), HttpStatusCode.NotFound);
-        public static Result<Unit> NotFound(Guid errorCode) => NotFound<Unit>(Error.Create(errorCode));
+        public static Result<Unit> NotFound(Guid errorCode, string[] translationVariables = null) => NotFound<Unit>(Error.Create(errorCode, translationVariables));
 
     }
 }

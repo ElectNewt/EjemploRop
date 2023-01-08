@@ -23,6 +23,6 @@ namespace ROP
         public static Result<Unit> Conflict(Error error) => new Result<Unit>(ImmutableArray.Create(error), HttpStatusCode.Conflict);
 
         public static Result<Unit> Conflict(string error) => new Result<Unit>(ImmutableArray.Create(Error.Create(error)), HttpStatusCode.Conflict);
-        public static Result<Unit> Conflict(Guid errorCode) => Conflict<Unit>(Error.Create(errorCode));
+        public static Result<Unit> Conflict(Guid errorCode, string[] translationVariables = null) => Conflict<Unit>(Error.Create(errorCode, translationVariables));
     }
 }

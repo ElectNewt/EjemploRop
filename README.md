@@ -325,6 +325,24 @@ It will look for that guid in the translation file and show the message field as
 }
 ````
 
+### Error Translations with variables
+The messages in the translations support variables on the messages using standard C# string format.
+
+For example a message like `example variable1: {0}, variable2: {2}` will replace `{x}` for the variables you assign on the error creation.
+
+To accomplish the expected result, all the failure creation messages that support the `ErrorCode` have an optional parameter that accpets an array of string (`string[]`) 
+which should match the number of variables in the string message, example:
+
+````csharp
+Result.NotFound("Guid-NOT-found", new []{"identifier1"}); // "The id {0} cannot be found"
+-> "The id identifier1 cannot be found"
+````
+
+
+Note: If the `TranslationVariables` is empty the library will not try to format the string message.
+
+
+
 ### Add the custom serializer.
 
 You can add it manually with the next command: 

@@ -22,7 +22,7 @@ namespace ROP
         public static Result<Unit> BadRequest(Error error) => new Result<Unit>(ImmutableArray.Create(error), HttpStatusCode.BadRequest);
 
         public static Result<Unit> BadRequest(string error) => new Result<Unit>(ImmutableArray.Create(Error.Create(error)), HttpStatusCode.BadRequest);
-        public static Result<Unit> BadRequest(Guid errorCode) => BadRequest<Unit>(Error.Create(errorCode));
+        public static Result<Unit> BadRequest(Guid errorCode, string[] translationVariables = null) => BadRequest<Unit>(Error.Create(errorCode, translationVariables));
 
     }
 }
