@@ -5,7 +5,7 @@ using System.Linq;
 namespace ROP
 {
     ///<summary>
-    /// Excepción que encapsula los Errores
+    /// custom exception that encapsulates the errors
     /// </summary>
     public class ErrorResultException : Exception
     {
@@ -26,7 +26,7 @@ namespace ROP
         {
             if (errors.Length == 0)
             {
-                throw new Exception("Debes incluir almenos un error");
+                throw new Exception("You should include at least one Error");
             }
 
             if (errors.Length == 1)
@@ -36,7 +36,7 @@ namespace ROP
 
             return errors
                 .Select(e => e.Message)
-                .Prepend($"Han ocurrido {errors.Length} Errores:")
+                .Prepend($"{errors.Length} Errors occurred:")
                 .JoinStrings(System.Environment.NewLine);
         }
     }

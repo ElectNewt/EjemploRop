@@ -7,6 +7,9 @@ namespace ROP
     public static class Result_Ignore
     {
 
+        /// <summary>
+        /// Similar to fire and forget, the method gets executed, but the response is ignored
+        /// </summary>
         public static Result<Unit> Ignore<T>(this Result<T> r)
         {
             try
@@ -22,6 +25,9 @@ namespace ROP
             }
         }
 
+        /// <summary>
+        /// Similar to fire and forget, the method gets executed, but the response is ignored
+        /// </summary>
         public static async Task<Result<Unit>> Ignore<T>(this Task<Result<T>> r)
         {
             try

@@ -13,7 +13,7 @@ namespace ROP.UnitTest
 
             Result<(string, int)> result = IntToString(originalValue)
                 .Combine(StringIntoInt);
-
+            
             Assert.True(result.Success);
             Assert.Equal(originalValue.ToString(), result.Value.Item1);
             Assert.Equal(originalValue, result.Value.Item2);

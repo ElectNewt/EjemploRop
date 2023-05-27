@@ -8,11 +8,19 @@ namespace ROP.APIExtensions
 {
     public static class ActionResultExtensions
     {
+        /// <summary>
+        /// Converts a result T chain, into an IActionResult, it uses the HttpStatusCode on the result chain
+        /// use .UseSuccessHttpStatusCode(HttpStatusCode) if you want to set it up.
+        /// </summary>
         public static IActionResult ToActionResult<T>(this Result<T> result)
         {
             return result.ToDto().ToHttpStatusCode(result.HttpStatusCode);
         }
 
+        /// <summary>
+        /// Converts a result T chain, into an IActionResult, it uses the HttpStatusCode on the result chain
+        /// use .UseSuccessHttpStatusCode(HttpStatusCode) if you want to set it up.
+        /// </summary>
         public static async Task<IActionResult> ToActionResult<T>(this Task<Result<T>> result)
         {
             Result<T> r = await result;

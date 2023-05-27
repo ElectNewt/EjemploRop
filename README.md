@@ -10,9 +10,15 @@ This code does references the post [Railway oriented programming](https://www.ne
 
 | Pacakge in nuget                                                                                                     | .NET Standard | 
 |----------------------------------------------------------------------------------------------------------------------|:-------------:|
-| [Netmetnor.ROP](https://www.nuget.org/packages/Netmentor.ROP)                                                        | 2.0 | 
-| [Netmetnor.ROP.ApiExtensions](https://www.nuget.org/packages/Netmentor.ROP.ApiExtensions/)                           | 2.0 | 
-| [Netmetnor.ROP.ApiExtensions.Translations](https://www.nuget.org/packages/Netmentor.ROP.ApiExtensions.Translations/) | 2.0 | 
+| [Netmentor.ROP](https://www.nuget.org/packages/Netmentor.ROP)                                                        | 2.0 | 
+| [Netmentor.ROP.ApiExtensions](https://www.nuget.org/packages/Netmentor.ROP.ApiExtensions/)                           | 2.0 | 
+| [Netmentor.ROP.ApiExtensions.Translations](https://www.nuget.org/packages/Netmentor.ROP.ApiExtensions.Translations/) | 2.0 | 
+
+### What is each package
+- `Netmentor.ROP`: Implementation of the `Result<T>` structure.
+- `Netmentor.ROP.ApiExtensions`: Provides `ToActionResult<T>` that converts `Result<T>` into `IActionResult`.
+- `Netmentor.ROP.ApiExtensions.Translations`: Provides the ability to use your `.resx` files for your error messages for multiple languages.
+
 
 
 ## Implement Railway Oriented programming into your application

@@ -6,6 +6,9 @@ namespace ROP
 {
     public static class Result_Map
     {
+        /// <summary>
+        /// allows to get map from a result T to U, the mapper method do not need to return a result T
+        /// </summary>
         public static Result<U> Map<T, U>(this Result<T> r, Func<T, U> mapper)
         {
             try
@@ -21,6 +24,9 @@ namespace ROP
             }
         }
         
+        /// <summary>
+        /// allows to get map from a result T to U, the mapper method do not need to return a result T
+        /// </summary>
         public static async Task<Result<U>> Map<T, U>(this Task<Result<T>> result, Func<T, U> mapper)
         {
             try

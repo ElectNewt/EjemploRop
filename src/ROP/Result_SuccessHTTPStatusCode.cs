@@ -7,6 +7,9 @@ namespace ROP
 {
     public static class Result_SuccessHTTPStatusCode
     {
+        /// <summary>
+        /// It allows to specify a success status code, handy if for example you are returning the chain on an API.
+        /// </summary>
         public static Result<T> UseSuccessHttpStatusCode<T>(this Result<T> r, HttpStatusCode httpStatusCode)
         {
             try
@@ -22,7 +25,9 @@ namespace ROP
             }
         }
 
-
+        /// <summary>
+        /// It allows to specify a success status code, handy if for example you are returning the chain on an API.
+        /// </summary>
         public static async Task<Result<T>> UseSuccessHttpStatusCode<T>(this Task<Result<T>> result, HttpStatusCode httpStatusCode)
         {
             try
