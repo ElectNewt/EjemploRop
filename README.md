@@ -239,7 +239,7 @@ NetMentorAccount result = ValidateNewAccount(account)
 You will not need to call this in 99.9% of the use case.
 
 #### Traverse
-Converts a list of `IEnumerable<Result<T>>` into `Rsult<List<T>>`
+Converts a list of `IEnumerable<Result<T>>` into `Result<List<T>>`
 `````csharp
 Result<List<NetMentorAccount>> result = GetUsersByIds(arrayIds) //<- assuing GetUsersByIds returns List<Result<T>>
   .Traverse();
