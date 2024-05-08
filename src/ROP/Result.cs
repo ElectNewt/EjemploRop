@@ -10,8 +10,6 @@ namespace ROP
         /// </summary>
         public static readonly Unit Unit = Unit.Value;
         
-        private static readonly Task<Result<Unit>> _completedUnitAsync = Task.FromResult(Success());
-
         /// <summary>
         /// chains an object into the Result Structure
         /// </summary>
@@ -31,11 +29,6 @@ namespace ROP
         /// Converts a synchronous Result structure into async
         /// </summary>
         public static Task<Result<T>> Async<T>(this Result<T> r) => Task.FromResult(r);
-        
-        /// <summary>
-        /// Converts a synchronous Result structure into async
-        /// </summary>
-        public static Task<Result<Unit>> Async(this Result<Unit> r) => _completedUnitAsync;
 
 
     }
