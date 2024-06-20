@@ -8,8 +8,6 @@ namespace ROP
 {
     public static class Result_Combine
     {
-       
-        
         /// <summary>
         /// Allows to combine the result of two methods. the input of the combined method is the result of the first method.
         /// </summary>
@@ -19,7 +17,7 @@ namespace ROP
             try
             {
                 if (!r1.Success)
-                    return r1.Errors;
+                    return Result.Failure<(T1, T2)>(r1.Errors, r1.HttpStatusCode);
 
                 Result<T2> r2 = action(r1.Value);
 
@@ -27,7 +25,7 @@ namespace ROP
                     return Result.Success((r1.Value, r2.Value));
 
                 if (!r2.Success)
-                    return r2.Errors;
+                    return Result.Failure<(T1, T2)>(r2.Errors, r2.HttpStatusCode);
 
                 return Result.Failure<(T1, T2)>(r1.Errors.Concat(r2.Errors).ToImmutableArray(), r1.HttpStatusCode);
             }
@@ -49,7 +47,7 @@ namespace ROP
             {
                 Result<T1> r1 = await result;
                 if (!r1.Success)
-                    return r1.Errors;
+                    return Result.Failure<(T1, T2)>(r1.Errors, r1.HttpStatusCode);
 
                 Result<T2> r2 = await action(r1.Value);
 
@@ -57,7 +55,7 @@ namespace ROP
                     return Result.Success((r1.Value, r2.Value));
 
                 if (!r2.Success)
-                    return r2.Errors;
+                    Result.Failure<(T1, T2)>(r2.Errors, r2.HttpStatusCode);
 
                 return Result.Failure<(T1, T2)>(r1.Errors.Concat(r2.Errors).ToImmutableArray(), r1.HttpStatusCode);
             }

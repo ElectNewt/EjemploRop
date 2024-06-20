@@ -27,7 +27,7 @@ namespace ROP
         {
             if (errors.Length == 0)
             {
-                throw new InvalidOperationException("debes indicar almenos un error");
+                throw new InvalidOperationException("You should specify at least one error");
             }
 
             HttpStatusCode = statusCode;

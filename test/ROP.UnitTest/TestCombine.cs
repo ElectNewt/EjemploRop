@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -57,6 +58,21 @@ namespace ROP.UnitTest
             Assert.False(result.Success);
             Assert.Single(result.Errors);
             Assert.Contains("error", result.Errors.First().Message);
+        }
+
+        [Fact]
+        public async Task TestCombineWithFaiulreMapsToCorrectError()
+        {
+            int originalValue = 1;
+
+            Result<bool> result = await StringIntoIntAsyncFailure("1")
+                .Combine(IntToStringAsync)
+                .Map(_=>true);
+            
+            Assert.False(result.Success);
+            Assert.Single(result.Errors);
+            Assert.Equal(HttpStatusCode.NotFound, result.HttpStatusCode);
+            
         }
     }
 }
