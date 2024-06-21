@@ -249,9 +249,9 @@ Result<List<NetMentorAccount>> result = GetUsersByIds(arrayIds) //<- assuing Get
 In most of our use cases, we return the information using an API, and it is not always the same status code, so for that reason, we allow to change this status code when the chain is a success.
 ````csharp
 Result<ValidationResult> result = ValidateNewAccount(account)
-  .UseSuccessHttpStatusCode(HttpStatusCode.OK);
+  .UseSuccessHttpStatusCode(HttpStatusCode.Accepted);
 ````
-If you don't specify any status code, it will be `HttpStatusCode.Accepted` (202).
+If you don't specify any status code, it will be `HttpStatusCode.OK` (200).
 
 But as mentioned, this only matters if you are using API.
 

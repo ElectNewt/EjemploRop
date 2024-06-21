@@ -13,7 +13,7 @@ namespace ROP
         /// <summary>
         /// chains an object into the Result Structure
         /// </summary>
-        public static Result<T> Success<T>(this T value) => new Result<T>(value, HttpStatusCode.Accepted);
+        public static Result<T> Success<T>(this T value) => new Result<T>(value, HttpStatusCode.OK);
         
         /// <summary>
         /// chains an object into the Result Structure
@@ -23,7 +23,7 @@ namespace ROP
         /// <summary>
         /// chains an Result.Unit into the Result Structure
         /// </summary>
-        public static Result<Unit> Success() => new Result<Unit>(Unit, HttpStatusCode.Accepted);
+        public static Result<Unit> Success() => new Result<Unit>(Unit, HttpStatusCode.OK);
         
         /// <summary>
         /// Converts a synchronous Result structure into async

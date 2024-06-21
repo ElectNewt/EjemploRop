@@ -28,7 +28,7 @@ namespace ROP.UnitTest
                 .Async();
 
             Assert.True(result.Success);
-            Assert.Equal(HttpStatusCode.Accepted, result.HttpStatusCode);
+            Assert.Equal(HttpStatusCode.OK, result.HttpStatusCode);
         }
 
         //TODO: choose which version do i want to use, only the "useSuccessStatusCode" at the end of the chain or at any point.
@@ -41,7 +41,7 @@ namespace ROP.UnitTest
                 .Bind(IntToString);
 
             Assert.True(result.Success);
-            Assert.Equal(HttpStatusCode.Accepted, result.HttpStatusCode);
+            Assert.Equal(HttpStatusCode.OK, result.HttpStatusCode);
         }
 
 

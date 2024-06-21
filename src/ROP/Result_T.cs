@@ -8,7 +8,7 @@ namespace ROP
     {
         public readonly T Value;
 
-        public static implicit operator Result<T>(T value) => new Result<T>(value, HttpStatusCode.Accepted);
+        public static implicit operator Result<T>(T value) => new Result<T>(value, HttpStatusCode.OK);
 
         public static implicit operator Result<T>(ImmutableArray<Error> errors) => new Result<T>(errors, HttpStatusCode.BadRequest);
 

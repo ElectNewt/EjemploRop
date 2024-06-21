@@ -23,7 +23,7 @@ namespace ROP.UnitTest
             ResultDto<int> resultVaue = result.Value as ResultDto<int>;
 
             Assert.Equal(originalValue, resultVaue.Value);
-            Assert.Equal((int)HttpStatusCode.Accepted, result.StatusCode);
+            Assert.Equal((int)HttpStatusCode.OK, result.StatusCode);
         }
     }
 }
