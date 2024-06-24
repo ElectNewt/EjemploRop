@@ -8,11 +8,11 @@ This code does references the post [Railway oriented programming](https://www.ne
 
 ## Railway oriented programming en NUGET
 
-| Pacakge in nuget                                                                                                     | .NET Standard | 
-|----------------------------------------------------------------------------------------------------------------------|:-------------:|
-| [Netmentor.ROP](https://www.nuget.org/packages/Netmentor.ROP)                                                        | 2.0 | 
-| [Netmentor.ROP.ApiExtensions](https://www.nuget.org/packages/Netmentor.ROP.ApiExtensions/)                           | 2.0 | 
-| [Netmentor.ROP.ApiExtensions.Translations](https://www.nuget.org/packages/Netmentor.ROP.ApiExtensions.Translations/) | 2.0 | 
+| Pacakge in nuget                                                                                                     | .NET Standard | .NET |
+|----------------------------------------------------------------------------------------------------------------------|:-------------:|:----:|
+| [Netmentor.ROP](https://www.nuget.org/packages/Netmentor.ROP)                                                        |      2.1      | 8.0  | 
+| [Netmentor.ROP.ApiExtensions](https://www.nuget.org/packages/Netmentor.ROP.ApiExtensions/)                           |      2.1      |  8.0  | 
+| [Netmentor.ROP.ApiExtensions.Translations](https://www.nuget.org/packages/Netmentor.ROP.ApiExtensions.Translations/) |      2.1      |  8.0  | 
 
 ### What is each package
 - `Netmentor.ROP`: Implementation of the `Result<T>` structure.
