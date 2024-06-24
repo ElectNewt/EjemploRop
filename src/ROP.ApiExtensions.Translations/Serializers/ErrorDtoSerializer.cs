@@ -62,7 +62,7 @@ namespace ROP.ApiExtensions.Translations.Serializers
             }
 
             //theoretically with the translation in place errormessage will never be null
-            if (errorMessage == null && errorCode == null)
+            if (errorMessage == null)
                 throw new Exception("Either Message or the ErrorCode has to be populated into the error");
 
             return new ErrorDto()
