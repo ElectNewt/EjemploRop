@@ -306,6 +306,43 @@ During the execution of `.ToActionResult()` result gets converted into a `Data T
 - Note: We mainly did it due to serialisation issues with immutable classes in C#.
 
 
+### ProblemDetails
+if what you are looking for is convert any non success Status Code into a [ProblemDetails](https://datatracker.ietf.org/doc/html/rfc9457) object you can do it with `.ToResultOrProblemDetails`:
+
+````chsarp
+public async Task<IActionResult> CreateNewAccount(Account account)
+{
+  return await _useCase.Execute(account)
+    .ToResultOrProblemDetails();
+}
+````
+
+This will return either `T` for any successful response or ProblemDetails with the `Status` property as the `Statuscode`
+and a property called `Errors` that contains a list of errors:
+
+```json
+{
+  "value": {
+    "title": "Error(s) found",
+    "status": 400,
+    "detail": "One or more errors occurred",
+    "Errors": [
+      {
+        "message": "example message",
+        "errorCode": "0b002212-4e6b-4561-96f7-8a06dbc65ac3",
+        "translationVariables": null
+      }
+    ]
+  },
+  "formatters": [],
+  "contentTypes": [],
+  "declaredType": null,
+  "statusCode": 400
+}
+```
+
+
+
 ## Error Translations
 The library can be extended with `ROP.ApiExtensions.Translations` to provide an out of the box functionality to translate errors at serialization time.
 
