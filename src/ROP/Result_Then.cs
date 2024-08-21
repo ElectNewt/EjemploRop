@@ -13,16 +13,19 @@ namespace ROP
         /// thenMethod returns string
         /// value on the chain -> int
         /// </summary>
-        public static Result<T> Then<T>(this Result<T> r, Action<T> action)
+        public static Result<T> Then<T, U>(this Result<T> r, Func<T, Result<U>> method)
         {
             try
             {
-                if (r.Success)
+                if (!r.Success)
                 {
-                    action(r.Value);
+                    return Result.Failure<T>(r.Errors, r.HttpStatusCode);
                 }
 
-                return r;
+                var thenResult = method(r.Value);
+
+                return thenResult.Success ? r.Value 
+                    : Result.Failure<T>(thenResult.Errors, thenResult.HttpStatusCode);
             }
             catch (Exception e)
             {
@@ -38,17 +41,20 @@ namespace ROP
         /// thenMethod returns string
         /// value on the chain -> int
         /// </summary>
-        public static async Task<Result<T>> Then<T>(this Task<Result<T>> result, Action<T> action)
+        public static async Task<Result<T>> Then<T, U>(this Task<Result<T>> result, Func<T, Task<Result<U>>> method)
         {
             try
             {
                 var r = await result;
-                if (r.Success)
+                if (!r.Success)
                 {
-                    action(r.Value);
+                    return Result.Failure<T>(r.Errors, r.HttpStatusCode);
                 }
 
-                return r;
+                var thenResult = await method(r.Value);
+
+                return thenResult.Success ? r.Value 
+                    : Result.Failure<T>(thenResult.Errors, thenResult.HttpStatusCode);
             }
             catch (Exception e)
             {

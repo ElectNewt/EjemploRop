@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Immutable;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -52,7 +50,7 @@ namespace ROP.APIExtensions
                 Detail = "One or more errors occurred",
             };
 
-            problemDetails.Extensions.Add("Errors", result.Errors.Select(x => x.ToErrorDto()).ToList());
+            problemDetails.Extensions.Add("ValidationErrors", result.Errors.Select(x => x.ToErrorDto()).ToList());
 
             return problemDetails.ToHttpStatusCode(result.HttpStatusCode);
         }

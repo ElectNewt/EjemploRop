@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Xunit;
 
 namespace ROP.UnitTest
@@ -17,11 +13,12 @@ namespace ROP.UnitTest
             Result<string> result =
                 originalValue.Success()
                 .Bind(IntToString)
-                .Then(x => StringIntoInt(x));
+                .Then(StringIntoInt);
 
             Assert.True(result.Success);
             Assert.Equal(originalValue.ToString(), result.Value);
         }
+        
         [Fact]
         public async Task TestThenAsyncGetsIgnoredForTheResult()
         {
@@ -29,7 +26,7 @@ namespace ROP.UnitTest
 
             Result<string> result = await originalValue.Success().Async()
                 .Bind(IntToStringAsync)
-                .Then(x => StringIntoIntAsync(x));
+                .Then(StringIntoIntAsync);
 
             Assert.True(result.Success);
             Assert.Equal(originalValue.ToString(), result.Value);

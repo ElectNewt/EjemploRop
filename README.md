@@ -326,7 +326,7 @@ and a property called `Errors` that contains a list of errors:
     "title": "Error(s) found",
     "status": 400,
     "detail": "One or more errors occurred",
-    "Errors": [
+    "validationErrors": [
       {
         "message": "example message",
         "errorCode": "0b002212-4e6b-4561-96f7-8a06dbc65ac3",

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 using ROP.APIExtensions;
@@ -52,7 +50,7 @@ namespace ROP.UnitTest
             Assert.Equal("One or more errors occurred", resultVaue.Detail);
             Assert.Single(resultVaue.Extensions);
             var extension = resultVaue.Extensions.First();
-            Assert.Equal("Errors", extension.Key);
+            Assert.Equal("ValidationErrors", extension.Key);
             var errorDtos = extension.Value as List<ErrorDto>;
             Assert.Single(errorDtos);
             Assert.Equal(originalErrorValue, errorDtos.First().Message);
@@ -73,7 +71,7 @@ namespace ROP.UnitTest
             Assert.Equal("One or more errors occurred", resultVaue.Detail);
             Assert.Single(resultVaue.Extensions);
             var extension = resultVaue.Extensions.First();
-            Assert.Equal("Errors", extension.Key);
+            Assert.Equal("ValidationErrors", extension.Key);
             var errorDtos = extension.Value as List<ErrorDto>;
             Assert.Single(errorDtos);
             Assert.Equal(originalErrorValue.ErrorCode, errorDtos.First().ErrorCode);
