@@ -55,7 +55,7 @@ namespace ROP
                     return Result.Success((r1.Value, r2.Value));
 
                 if (!r2.Success)
-                    Result.Failure<(T1, T2)>(r2.Errors, r2.HttpStatusCode);
+                    return Result.Failure<(T1, T2)>(r2.Errors, r2.HttpStatusCode);
 
                 return Result.Failure<(T1, T2)>(r1.Errors.Concat(r2.Errors).ToImmutableArray(), r1.HttpStatusCode);
             }
