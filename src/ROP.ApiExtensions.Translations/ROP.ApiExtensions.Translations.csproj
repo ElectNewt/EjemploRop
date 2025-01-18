@@ -4,7 +4,7 @@
         <TargetFrameworks>net8.0;netstandard2.1</TargetFrameworks>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
         <PackageId>Netmentor.ROP.ApiExtensions.Translations</PackageId>
-        <Version>1.4.0</Version>
+        <Version>1.5.0</Version>
         <Authors>Ivan Abad</Authors>
         <Company>NetMentor</Company>
         <Description>Extension library created for RoP to handle translations</Description>
