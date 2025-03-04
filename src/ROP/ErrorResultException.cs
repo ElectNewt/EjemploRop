@@ -5,7 +5,7 @@ using System.Linq;
 namespace ROP
 {
     ///<summary>
-    /// custom exception that encapsulates the errors
+    /// Custom exception that encapsulates the errors
     /// </summary>
     public class ErrorResultException : Exception
     {

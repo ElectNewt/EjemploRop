@@ -47,6 +47,25 @@ namespace ROP
             }
         }
 
+        /// <summary>
+        /// The method gets executed IF the chain is in Error state,
+        /// the previous information will be lost
+        /// </summary>
+        public static async Task<Result<T>> Fallback<T>(this Task<Result<T>> r, Func<T, Result<T>> method)
+        {
+            try
+            {
+                var result = await r;
+                return result.Success
+                    ? result.Value
+                    :  method(result.Value);
 
+            }
+            catch (Exception e)
+            {
+                ExceptionDispatchInfo.Capture(e).Throw();
+                throw;
+            }
+        }
     }
 }
