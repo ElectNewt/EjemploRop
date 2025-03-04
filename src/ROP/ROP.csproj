@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+	<GenerateDocumentationFile>true</GenerateDocumentationFile>
+	<NoWarn>1591</NoWarn>
     <PackageId>Netmentor.ROP</PackageId>
     <Version>1.5.0</Version>
     <Authors>Ivan Abad  </Authors>
