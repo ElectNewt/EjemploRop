@@ -11,7 +11,7 @@ namespace ROP
     {
 
         /// <summary>
-        /// converts a IEnumerable result T into a result list T
+        /// Converts a IEnumerable result T into a result list T
         /// </summary>
         public static Result<List<T>> Traverse<T>(this IEnumerable<Result<T>> results)
         {
@@ -47,7 +47,7 @@ namespace ROP
         }
 
         /// <summary>
-        /// converts a IEnumerable result T into a Result list T
+        /// Converts a IEnumerable result T into a Result list T
         /// </summary>
         public static async Task<Result<List<T>>> Traverse<T>(this IEnumerable<Task<Result<T>>> results)
         {

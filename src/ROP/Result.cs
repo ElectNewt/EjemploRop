@@ -11,17 +11,17 @@ namespace ROP
         public static readonly Unit Unit = Unit.Value;
         
         /// <summary>
-        /// chains an object into the Result Structure
+        /// Chains an object into the Result Structure
         /// </summary>
         public static Result<T> Success<T>(this T value) => new Result<T>(value, HttpStatusCode.OK);
-        
+
         /// <summary>
-        /// chains an object into the Result Structure
+        /// Chains an object into the Result Structure
         /// </summary>
         public static Result<T> Success<T>(this T value, HttpStatusCode httpStatusCode) => new Result<T>(value, httpStatusCode);
-        
+
         /// <summary>
-        /// chains an Result.Unit into the Result Structure
+        /// Chains an Result.Unit into the Result Structure
         /// </summary>
         public static Result<Unit> Success() => new Result<Unit>(Unit, HttpStatusCode.OK);
         

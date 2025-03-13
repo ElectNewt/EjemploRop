@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using System.Threading.Tasks;
+using Xunit;
 
 namespace ROP.UnitTest
 {
@@ -33,6 +34,19 @@ namespace ROP.UnitTest
 
             Assert.True(result.Success);
             Assert.Equal(4, result.Value);
+        }
+
+        [Fact]
+        public async Task TestFallbackWithNonAsyncMethodInTheMiddle()
+        {
+            int originalValue = 1;
+
+            Result<int> result = await MetodoQueFalla(originalValue).Async()    // <- async value
+                .Fallback(x => MetodoOriginal(1))                                   // <- Sincronous method
+                .Bind(MatodoQueMultiplica);                                     // <- async metohd
+
+            Assert.True(result.Success);
+            Assert.Equal(originalValue, result.Value);
         }
 
         private Result<int> MetodoOriginal(int i)

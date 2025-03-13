@@ -65,14 +65,40 @@ namespace ROP.UnitTest
         {
             int originalValue = 1;
 
-            Result<bool> result = await StringIntoIntAsyncFailure("1")
+            Result<bool> result = await StringIntoIntAsyncFailure(originalValue.ToString())
                 .Combine(IntToStringAsync)
                 .Map(_=>true);
             
             Assert.False(result.Success);
             Assert.Single(result.Errors);
             Assert.Equal(HttpStatusCode.NotFound, result.HttpStatusCode);
-            
+        }
+
+        [Fact]
+        public async Task TestCombineWithFaiulreMapsToCorrectError2()
+        {
+            int originalValue = 1;
+
+            Result<bool> result = await IntToStringAsync(originalValue)
+                .Combine(StringIntoIntAsyncFailure)
+                .Map(_ => true);
+
+            Assert.False(result.Success);
+            Assert.Single(result.Errors);
+            Assert.Equal(HttpStatusCode.NotFound, result.HttpStatusCode);
+        }
+
+        [Fact]
+        public async Task TestCombindWithNonAsyncMethodInTheMiddle()
+        {
+            int originalValue = 1;
+
+            Result<string> result = await IntToStringAsync(originalValue)   // <- async value
+                .Combine(StringIntoInt)                                     // <- Sincronous method
+                .Bind(x => x.Item1.Success().Async());                      // <- async metohd
+
+            Assert.True(result.Success);
+            Assert.Equal(originalValue.ToString(), result.Value);
         }
     }
 }
