@@ -9,14 +9,25 @@ namespace ROP
     /// </summary>
     public class ErrorResultException : Exception
     {
+        /// <summary>
+        /// The errors that occurred.
+        /// </summary>
         public ImmutableArray<Error> Errors { get; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ErrorResultException"/> class.
+        /// </summary>
+        /// <param name="errors"></param>
         public ErrorResultException(ImmutableArray<Error> errors)
             : base(ValidateAndGetErrorMessage(errors))
         {
             Errors = errors;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ErrorResultException"/> class.
+        /// </summary>
+        /// <param name="error"></param>
         public ErrorResultException(Error error)
             : this(new[] { error }.ToImmutableArray())
         {

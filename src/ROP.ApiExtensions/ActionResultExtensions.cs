@@ -6,13 +6,18 @@ using System.Threading.Tasks;
 
 namespace ROP.APIExtensions
 {
+    /// <summary>
+    /// Provides extension methods to convert results into IActionResult.
+    /// </summary>
     public static class ActionResultExtensions
     {
         /// <summary>
         /// Converts a result T chain, into an IActionResult, it uses the HttpStatusCode on the result chain
         /// use .UseSuccessHttpStatusCode(HttpStatusCode) if you want to set it up.
-        /// It returns a ResultDto of T, if you want to return T or problemDetails in case of an error, use ToResultOrProblemDetails
         /// </summary>
+        /// <typeparam name="T">The type of the value in the result.</typeparam>
+        /// <param name="result">The result to convert.</param>
+        /// <returns>Returns a ResultDto of T. If you want to return T or ProblemDetails in case of an error, use ToResultOrProblemDetails.</returns>
         public static IActionResult ToActionResult<T>(this Result<T> result)
         {
             return result.ToDto().ToHttpStatusCode(result.HttpStatusCode);
@@ -21,8 +26,10 @@ namespace ROP.APIExtensions
         /// <summary>
         /// Converts a result T chain, into an IActionResult, it uses the HttpStatusCode on the result chain
         /// use .UseSuccessHttpStatusCode(HttpStatusCode) if you want to set it up.
-        /// It returns a ResultDto of T, if you want to return T or problemDetails in case of an error, use ToResultOrProblemDetails
         /// </summary>
+        /// <typeparam name="T">The type of the value in the result.</typeparam>
+        /// <param name="result">The result to convert.</param>
+        /// <returns>Returns a ResultDto of T. If you want to return T or ProblemDetails in case of an error, use ToResultOrProblemDetails.</returns>
         public static async Task<IActionResult> ToActionResult<T>(this Task<Result<T>> result)
         {
             Result<T> r = await result;
@@ -34,8 +41,8 @@ namespace ROP.APIExtensions
         /// <summary>
         /// Converts a result T chain, into an IActionResult with the value or ProblemDetails.
         /// It uses the HttpStatusCode on the result chain. use .UseSuccessHttpStatusCode(HttpStatusCode) if you want to set it up.
-        /// This method is useful when you want to return the value or a ProblemDetails in case of an error.
         /// </summary>
+        /// <returns>Returns the value or a ProblemDetails in case of an error.</returns>
         public static IActionResult ToValueOrProblemDetails<T>(this Result<T> result)
         {
             if (result.Success)
@@ -58,8 +65,8 @@ namespace ROP.APIExtensions
         /// <summary>
         /// Converts a result T chain, into an IActionResult with the value or ProblemDetails.
         /// It uses the HttpStatusCode on the result chain. use .UseSuccessHttpStatusCode(HttpStatusCode) if you want to set it up.
-        /// This method is useful when you want to return the value or a ProblemDetails in case of an error.
         /// </summary>
+        /// <returns>Returns the value or a ProblemDetails in case of an error.</returns>
         public static async Task<IActionResult> ToValueOrProblemDetails<T>(this Task<Result<T>> result)
         {
             Result<T> r = await result;

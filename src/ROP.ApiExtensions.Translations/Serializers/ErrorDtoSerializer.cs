@@ -9,15 +9,32 @@ using ROP.ApiExtensions.Translations.Language.Extensions;
 
 namespace ROP.ApiExtensions.Translations.Serializers
 {
+    /// <summary>
+    /// Serializer for the ErrorDto, it will use the translation file to get the error message.
+    /// </summary>
+    /// <typeparam name="TTranslationFile"></typeparam>
     public class ErrorDtoSerializer<TTranslationFile> : JsonConverter<ErrorDto>
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
 
+        /// <summary>
+        /// Constructor for the ErrorDtoSerializer.
+        /// </summary>
+        /// <param name="httpContextAccessor"></param>
         public ErrorDtoSerializer(IHttpContextAccessor httpContextAccessor)
         {
             _httpContextAccessor = httpContextAccessor;
         }
-            
+
+        /// <summary>
+        /// Reads the error from the json and returns the ErrorDto.
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <param name="typeToConvert"></param>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        /// <exception cref="JsonException"></exception>
+        /// <exception cref="Exception"></exception>
         public override ErrorDto Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             string errorMessage = null;
@@ -72,6 +89,12 @@ namespace ROP.ApiExtensions.Translations.Serializers
             };
         }
 
+        /// <summary>
+        /// Writes the error to the json.
+        /// </summary>
+        /// <param name="writer"></param>
+        /// <param name="value"></param>
+        /// <param name="options"></param>
         public override void Write(Utf8JsonWriter writer, ErrorDto value, JsonSerializerOptions options)
         {
             string errorMessageValue = value.Message;

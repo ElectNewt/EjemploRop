@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace ROP
 {
+    /// <summary>
+    /// Provides extension methods for handling success status codes in result chains.
+    /// </summary>
     public static class Result_SuccessHTTPStatusCode
     {
         /// <summary>
