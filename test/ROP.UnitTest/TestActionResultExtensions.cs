@@ -44,7 +44,7 @@ namespace ROP.UnitTest
                 await Result.BadRequest<int>(originalErrorValue).Async().ToValueOrProblemDetails();
 
             ObjectResult result = apiResult as ObjectResult;
-            ProblemDetails? resultVaue = result.Value as ProblemDetails;
+            ProblemDetails resultVaue = result.Value as ProblemDetails;
             Assert.Equal((int)HttpStatusCode.BadRequest, result.StatusCode);
             Assert.Equal("Error(s) found", resultVaue.Title);
             Assert.Equal("One or more errors occurred", resultVaue.Detail);
@@ -65,7 +65,7 @@ namespace ROP.UnitTest
                 await Result.BadRequest<int>(originalErrorValue).Async().ToValueOrProblemDetails();
 
             ObjectResult result = apiResult as ObjectResult;
-            ProblemDetails? resultVaue = result.Value as ProblemDetails;
+            ProblemDetails resultVaue = result.Value as ProblemDetails;
             Assert.Equal((int)HttpStatusCode.BadRequest, result.StatusCode);
             Assert.Equal("Error(s) found", resultVaue.Title);
             Assert.Equal("One or more errors occurred", resultVaue.Detail);
