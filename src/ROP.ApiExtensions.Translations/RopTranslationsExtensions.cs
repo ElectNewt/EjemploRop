@@ -6,6 +6,9 @@ using ROP.ApiExtensions.Translations.Serializers;
 
 namespace ROP.ApiExtensions.Translations
 {
+    /// <summary>
+    /// Extensions to add translations to the JsonSerializerOptions.
+    /// </summary>
     public static class RopTranslationsExtensions
     {
         /// <summary>

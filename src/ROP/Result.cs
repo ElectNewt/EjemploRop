@@ -3,6 +3,9 @@ using System.Threading.Tasks;
 
 namespace ROP
 {
+    /// <summary>
+    /// Provides extension methods to create Result objects.
+    /// </summary>
     public static partial class Result
     {
         /// <summary>

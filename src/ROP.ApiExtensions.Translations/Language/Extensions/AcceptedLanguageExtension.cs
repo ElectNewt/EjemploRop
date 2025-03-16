@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Http;
 
 namespace ROP.ApiExtensions.Translations.Language.Extensions
 {
+    /// <summary>
+    /// Extension to get the language from the header Accept-Language.
+    /// </summary>
     public static class AcceptedLanguageExtension
     {
         /// <summary>

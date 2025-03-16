@@ -4,6 +4,9 @@ using System.Threading.Tasks;
 
 namespace ROP
 {
+    /// <summary>
+    /// Provides extension methods to chain two methods, the output of the first is the input of the second.
+    /// </summary>
     public static class Result_Bind
     {
         
@@ -30,7 +33,6 @@ namespace ROP
             }
         }
 
-
         /// <summary>
         /// Allows to chain two async methods, the output of the first is the input of the second.
         /// </summary>
@@ -54,7 +56,6 @@ namespace ROP
                 throw;
             }
         }
-
 
         /// <summary>
         /// Allows to chain an async method to a non async method, the output of the first is the input of the second.

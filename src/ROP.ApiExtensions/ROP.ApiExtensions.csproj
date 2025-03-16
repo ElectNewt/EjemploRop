@@ -3,6 +3,7 @@
     <PropertyGroup>
         <TargetFrameworks>net8.0;netstandard2.1</TargetFrameworks>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
         <PackageId>Netmentor.ROP.ApiExtensions</PackageId>
         <Version>1.6.0</Version>
         <Authors>Ivan Abad</Authors>

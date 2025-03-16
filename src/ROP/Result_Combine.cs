@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace ROP
 {
+    /// <summary>
+    /// Provides extension methods to combine the result of two methods, the input of the combined method is the result of the first method.
+    /// </summary>
     public static class Result_Combine
     {
         /// <summary>
@@ -35,7 +38,6 @@ namespace ROP
                 throw;
             }
         }
-
 
         /// <summary>
         /// Allows to combine the result of two methods. the input of the combined method is the result of the first method.

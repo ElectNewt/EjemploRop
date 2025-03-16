@@ -3,6 +3,9 @@ using System.Threading.Tasks;
 
 namespace ROP
 {
+    /// <summary>
+    /// Provides extension methods for throwing exceptions based on result states.
+    /// </summary>
     public static class Result_Throw
     {
         /// <summary>

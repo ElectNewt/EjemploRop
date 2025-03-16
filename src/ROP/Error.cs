@@ -3,10 +3,24 @@ using System.Collections.Generic;
 
 namespace ROP
 {
+    /// <summary>
+    /// Represents an error that occurred during the execution of a Result.
+    /// </summary>
     public class Error
     {
+        /// <summary>
+        /// The error message.
+        /// </summary>
         public readonly string Message;
+
+        /// <summary>
+        /// The error code.
+        /// </summary>
         public readonly Guid? ErrorCode;
+
+        /// <summary>
+        /// The variables used for translating the error message.
+        /// </summary>
         public readonly string[] TranslationVariables;
 
         private Error(string message, Guid? errorCode, string[] translationVariables)
@@ -38,6 +52,11 @@ namespace ROP
             return Error.Create(string.Empty, errorCode, translationVariables);
         }
 
+        /// <summary>
+        /// Converts an exception into a collection of Error objects.
+        /// </summary>
+        /// <param name="e"></param>
+        /// <returns></returns>
         public static IEnumerable<Error> Exception(Exception e)
         {
             if (e is ErrorResultException errs)
