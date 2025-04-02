@@ -5,7 +5,7 @@
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
         <PackageId>Netmentor.ROP.ApiExtensions</PackageId>
-		<Version>1.7.1</Version>
+		<Version>1.7.2</Version>
         <Authors>Ivan Abad</Authors>
         <Company>NetMentor</Company>
         <Description>Extension library related to API MVC for Netmentor.ROP</Description>
