@@ -10,33 +10,34 @@ on:
 jobs:
   Pipeline:
     runs-on: ubuntu-latest
+    env:
+      PACKAGE_VERSION: "1.7.2"  
+
     steps:
     - uses: actions/checkout@v2
+
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 8.0.x
+
     - name: Restore dependencies
       run: dotnet restore 
+
     - name: Build
       run: dotnet build --no-restore
+
     - name: Test
       run: dotnet test --no-build --verbosity normal
-    - name: publish ROP into nuget
-      uses: Jacup/publish-nuget@v2.6.0
-      with:
-        PROJECT_FILE_PATH: src/ROP/ROP.csproj
-        TAG_FORMAT: '*'
-        NUGET_KEY: ${{secrets.NUGET_API_KEY}}
-    - name: publish ROP.ApiExtensions into nuget
-      uses: Jacup/publish-nuget@v2.6.0
-      with:
-        PROJECT_FILE_PATH: src/ROP.ApiExtensions/ROP.ApiExtensions.csproj
-        TAG_FORMAT: '*'
-        NUGET_KEY: ${{secrets.NUGET_API_KEY}}
-    - name: publish ROP.ApiExtensions.Translations into nuget
-      uses: Jacup/publish-nuget@v2.6.0
-      with:
-        PROJECT_FILE_PATH: src/ROP.ApiExtensions.Translations/ROP.ApiExtensions.Translations.csproj
-        TAG_FORMAT: '*'
-        NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+
+    - name: Pack ROP
+      run: dotnet pack src/ROP/ROP.csproj --configuration Release --output ./packages --property:Version=${{ env.PACKAGE_VERSION }}
+
+    - name: Pack ROP.ApiExtensions
+      run: dotnet pack src/ROP.ApiExtensions/ROP.ApiExtensions.csproj --configuration Release --output ./packages --property:Version=${{ env.PACKAGE_VERSION }}
+
+    - name: Pack ROP.ApiExtensions.Translations
+      run: dotnet pack src/ROP.ApiExtensions.Translations/ROP.ApiExtensions.Translations.csproj --configuration Release --output ./packages --property:Version=${{ env.PACKAGE_VERSION }}
+
+    - name: Publish to NuGet
+      run: dotnet nuget push "./packages/*.nupkg" --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
