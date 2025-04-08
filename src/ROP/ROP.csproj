@@ -1,10 +1,9 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-	<GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <PackageId>Netmentor.ROP</PackageId>
-    <Version>1.7.2</Version>
+    <Version>1.8.0</Version>
     <Authors>Ivan Abad  </Authors>
     <Company>NetMentor</Company>
     <Description>Library to handle errors in C# in a more functional way in Railway oriented programming. based on Scott Wlaschin's Idea. </Description>
@@ -12,13 +11,10 @@
     <RepositoryUrl>https://github.com/ElectNewt/EjemploRop</RepositoryUrl>
     <TargetFrameworks>net8.0;netstandard2.1</TargetFrameworks>
   </PropertyGroup>
-
   <ItemGroup>
     <None Include="../../README.md" Pack="true" PackagePath="\"/>
   </ItemGroup>
-
   <ItemGroup>
-    <PackageReference Include="System.Collections.Immutable" Version="8.0.0" />
+    <PackageReference Include="System.Collections.Immutable" Version="8.0.0"/>
   </ItemGroup>
-
 </Project>
