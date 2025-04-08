@@ -13,6 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ROP.ApiExtensions", "src\RO
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ROP.ApiExtensions.Translations", "src\ROP.ApiExtensions.Translations\ROP.ApiExtensions.Translations.csproj", "{F6218AB5-F050-42B5-8849-5B58C0B414B3}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Elementos de la solución", "Elementos de la solución", "{D107F4C8-89CC-BEA8-D3D7-CA6B7733353D}"
+	ProjectSection(SolutionItems) = preProject
+		bump-config.json = bump-config.json
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

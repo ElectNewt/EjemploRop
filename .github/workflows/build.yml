@@ -1,43 +1,99 @@
 name: Pipeline
 
 on:
-  workflow_dispatch:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+    workflow_dispatch:
+    push:
+        branches: [master]
 
 jobs:
-  Pipeline:
-    runs-on: ubuntu-latest
-    env:
-      PACKAGE_VERSION: "1.7.2"  
+    Pipeline:
+        runs-on: ubuntu-latest
 
-    steps:
-    - uses: actions/checkout@v2
+        steps:
+            - uses: actions/checkout@v2
 
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 8.0.x
+            - name: Setup .NET
+              uses: actions/setup-dotnet@v1
+              with:
+                  dotnet-version: 8.0.x
 
-    - name: Restore dependencies
-      run: dotnet restore 
+            - name: Restore dependencies
+              run: dotnet restore
 
-    - name: Build
-      run: dotnet build --no-restore
+            - name: Build
+              run: dotnet build --no-restore
 
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
+            - name: Test
+              run: dotnet test --no-build --verbosity normal
 
-    - name: Pack ROP
-      run: dotnet pack src/ROP/ROP.csproj --configuration Release --output ./packages --property:Version=${{ env.PACKAGE_VERSION }}
+            - name: Install necessary tools
+              run: sudo apt-get update && sudo apt-get install -y xmlstarlet
 
-    - name: Pack ROP.ApiExtensions
-      run: dotnet pack src/ROP.ApiExtensions/ROP.ApiExtensions.csproj --configuration Release --output ./packages --property:Version=${{ env.PACKAGE_VERSION }}
+            - name: Read current version from .csproj
+              run: |
+                  VERSION=$(xmlstarlet sel -t -v "//Project/PropertyGroup/Version" src/ROP/ROP.csproj)
+                  echo "VERSION=$VERSION" >> $GITHUB_ENV
+                  echo "Current version: $VERSION"
 
-    - name: Pack ROP.ApiExtensions.Translations
-      run: dotnet pack src/ROP.ApiExtensions.Translations/ROP.ApiExtensions.Translations.csproj --configuration Release --output ./packages --property:Version=${{ env.PACKAGE_VERSION }}
+            - name: Determine bump type
+              run: |
+                  IS_MAJOR=$(jq -r '.isMajor // false' bump-config.json)
+                  IS_MINOR=$(jq -r '.isMinor // false' bump-config.json)
+                  IS_PATCH=$(jq -r '.isPatch // false' bump-config.json)
 
-    - name: Publish to NuGet
-      run: dotnet nuget push "./packages/*.nupkg" --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
+                  if [ "$IS_MAJOR" = "true" ]; then
+                    BUMP_TYPE="major"
+                  elif [ "$IS_MINOR" = "true" ]; then
+                    BUMP_TYPE="minor"
+                  else
+                    BUMP_TYPE="patch"
+                  fi
+                    echo "Bump type: $BUMP_TYPE"
+                    echo "BUMP_TYPE=$BUMP_TYPE" >> $GITHUB_ENV
+
+            - name: Calculate new version
+              run: |
+                  IFS='.' read -r MAJOR MINOR PATCH <<< "$VERSION"
+                  case "$BUMP_TYPE" in
+                    major)
+                      NEW_VERSION="$((MAJOR + 1)).0.0"
+                      ;;
+                    minor)
+                      NEW_VERSION="$MAJOR.$((MINOR + 1)).0"
+                      ;;
+                    patch)
+                      NEW_VERSION="$MAJOR.$MINOR.$((PATCH + 1))"
+                      ;;
+                  esac
+                  echo "New version: $NEW_VERSION"
+                  echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
+
+            - name: Set project paths
+              run: echo "PROJECT_PATHS=src/ROP/ROP.csproj src/ROP.ApiExtensions/ROP.ApiExtensions.csproj src/ROP.ApiExtensions.Translations/ROP.ApiExtensions.Translations.csproj" >> $GITHUB_ENV
+
+            - name: Update all .csproj files with new version
+              run: |
+                  for proj in $PROJECT_PATHS
+                  do
+                    xmlstarlet ed -L -u "//Version" -v "$NEW_VERSION" "$proj"
+                    sed -i '1{/^<?xml version=.*/d}' "$proj"
+                  done
+
+            - name: Commit and Push new version
+              run: |
+                  git checkout master
+                  git config user.name "github-actions"
+                  git config user.email "actions@github.com"
+                  git add $PROJECT_PATHS
+                  git commit -m "chore: bump version to $NEW_VERSION"
+                  git push
+
+            - name: Pack all projects
+              run: |
+                  for proj in $PROJECT_PATHS
+                  do
+                    dotnet pack "$proj" --configuration Release --output ./packages --property:Version=${{ env.NEW_VERSION }}
+                  done
+
+            - name: Publish to NuGet
+              run: dotnet nuget push "./packages/*.nupkg" --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
