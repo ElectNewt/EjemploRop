@@ -9,7 +9,7 @@ namespace ROP
     /// </summary>
     public static class Result_Bind
     {
-        
+
         /// <summary>
         /// Allows to chain two methods, the output of the first is the input of the second.
         /// </summary>
@@ -34,6 +34,29 @@ namespace ROP
         }
 
         /// <summary>
+        /// Allows to chain a non async method to an async method, the output of the first is the input of the second.
+        /// </summary>
+        /// <param name="r">current Result chain</param>
+        /// <param name="method">method to execute</param>
+        /// <typeparam name="T">Input type</typeparam>
+        /// <typeparam name="U">Output type</typeparam>
+        /// <returns>Async Result Structure of the return type</returns>
+        public static async Task<Result<U>> Bind<T, U>(this Result<T> r, Func<T, Task<Result<U>>> method)
+        {
+            try
+            {
+                return r.Success
+                    ? await method(r.Value)
+                    : Result.Failure<U>(r.Errors, r.HttpStatusCode);
+            }
+            catch (Exception e)
+            {
+                ExceptionDispatchInfo.Capture(e).Throw();
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Allows to chain two async methods, the output of the first is the input of the second.
         /// </summary>
         /// <param name="result">current Result chain</param>
@@ -46,9 +69,7 @@ namespace ROP
             try
             {
                 var r = await result;
-                return r.Success
-                    ? await method(r.Value)
-                    : Result.Failure<U>(r.Errors, r.HttpStatusCode);
+                return await r.Bind(method);
             }
             catch (Exception e)
             {
@@ -70,10 +91,7 @@ namespace ROP
             try
             {
                 var r = await result;
-
-                return r.Success
-                    ? method(r.Value)
-                    : Result.Failure<U>(r.Errors, r.HttpStatusCode);
+                return r.Bind(method);
             }
             catch (Exception e)
             {

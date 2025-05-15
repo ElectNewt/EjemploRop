@@ -23,7 +23,7 @@ namespace ROP
             {
                 List<Error> errors = new List<Error>();
                 List<T> output = new List<T>();
-                HttpStatusCode fristStatusCode = HttpStatusCode.BadRequest;
+                HttpStatusCode firstStatusCode = HttpStatusCode.BadRequest;
 
                 foreach (var r in results)
                 {
@@ -33,14 +33,14 @@ namespace ROP
                     }
                     else
                     {
-                        if (errors.Count == 0)
-                            fristStatusCode = r.HttpStatusCode;
+                        if (errors.Count == 0) firstStatusCode = r.HttpStatusCode;
+
                         errors.AddRange(r.Errors);
                     }
                 }
 
                 return errors.Count > 0
-                    ? Result.Failure<List<T>>(errors.ToImmutableArray(), fristStatusCode)
+                    ? Result.Failure<List<T>>(errors.ToImmutableArray(), firstStatusCode)
                     : Result.Success(output);
             }
             catch (Exception e)
@@ -58,13 +58,7 @@ namespace ROP
         {
             try
             {
-                List<Result<T>> res = new List<Result<T>>();
-                foreach (var task in results)
-                {
-                    res.Add(await task);
-                }
-
-                return res.Traverse();
+                return (await Task.WhenAll(results)).Traverse();
             }
             catch (Exception e)
             {

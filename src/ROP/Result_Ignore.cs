@@ -17,9 +17,7 @@ namespace ROP
         {
             try
             {
-                return r.Success
-                    ? Result.Success()
-                    : Result.Failure(r.Errors, r.HttpStatusCode);
+                return r.Bind(x => Result.Success());
             }
             catch (Exception e)
             {
