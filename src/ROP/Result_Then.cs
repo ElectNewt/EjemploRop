@@ -21,7 +21,7 @@ namespace ROP
         {
             try
             {
-                return r.Bind(x => method(x))
+                return r.Bind(method)
                         .Map(x => r.Value);
             }
             catch (Exception e)
@@ -43,7 +43,7 @@ namespace ROP
         {
             try
             {
-                return await r.Bind(x => method(x))
+                return await r.Bind(method)
                               .Map(x => r.Value);
             }
             catch (Exception e)

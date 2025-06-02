@@ -13,12 +13,12 @@ namespace ROP
         /// Allows to combine the result of two methods. the input of the combined method is the result of the first method.
         /// </summary>
         /// <returns>A result chain that contains a tuple with both results</returns>
-        public static Result<(T1, T2)> Combine<T1, T2>(this Result<T1> r1, Func<T1, Result<T2>> action)
+        public static Result<(T1, T2)> Combine<T1, T2>(this Result<T1> r, Func<T1, Result<T2>> action)
         {
             try
             {
-                return r1.Bind(x => action(x))
-                         .Map(x => (r1.Value, x));
+                return r.Bind(action)
+                        .Map(x => (r.Value, x));
             }
             catch (Exception e)
             {
@@ -31,12 +31,12 @@ namespace ROP
         /// Allows to combine the result of two methods. the input of the combined method is the result of the first method.
         /// </summary>
         /// <returns>A result chain that contains a tuple with both results</returns>
-        public static async Task<Result<(T1, T2)>> Combine<T1, T2>(this Result<T1> r1, Func<T1, Task<Result<T2>>> action)
+        public static async Task<Result<(T1, T2)>> Combine<T1, T2>(this Result<T1> r, Func<T1, Task<Result<T2>>> action)
         {
             try
             {
-                return await r1.Bind(x => action(x))
-                               .Map(x => (r1.Value, x));
+                return await r.Bind(action)
+                              .Map(x => (r.Value, x));
             }
             catch (Exception e)
             {
@@ -53,8 +53,8 @@ namespace ROP
         {
             try
             {
-                Result<T1> r1 = await result;
-                return await r1.Combine(action);
+                Result<T1> r = await result;
+                return await r.Combine(action);
             }
             catch (Exception e)
             {
@@ -71,8 +71,8 @@ namespace ROP
         {
             try
             {
-                Result<T1> r1 = await result;
-                return r1.Combine(action);
+                Result<T1> r = await result;
+                return r.Combine(action);
             }
             catch (Exception e)
             {
