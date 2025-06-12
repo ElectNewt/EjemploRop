@@ -4,7 +4,7 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <PackageId>Netmentor.ROP.ApiExtensions.Translations</PackageId>
-    <Version>1.8.0</Version>
+    <Version>1.9.0</Version>
     <Authors>Ivan Abad</Authors>
     <Company>NetMentor</Company>
     <Description>Extension library created for RoP to handle translations</Description>
