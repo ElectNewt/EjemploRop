@@ -219,14 +219,13 @@ Result<NetMentorAccount> result = ValidateNewAccount(account)
 ````
 
 #### Then
-Instead of using a delegate `Func<T, Result<U>>` in this case uses an `Action<T>` which means that the result of this then will be ignored.
+The Then method allows you to execute an additional method in the chain, but the result of that method is ignored and the original value is preserved *only if no error occurs*. If the method passed to Then returns an error, the chain is cut and the error is propagated, just like with Bind.
 ````csharp
 Result<Unit> result = ValidateNewAccount(account)
   .Bind(SaveUser) 
   .Then(TriggerExternalService)
   .Bind(SendCode);
 ````
-The use case will be similar to a fire&Forget.
 
 #### Throw
 It will return to you the actual value of `T` if it is in a success status, but if is not success, it will throw a  `ErrorResultException` with the errors as message on the exception.
@@ -243,6 +242,19 @@ Converts a list of `IEnumerable<Result<T>>` into `Result<List<T>>`
 `````csharp
 Result<List<NetMentorAccount>> result = GetUsersByIds(arrayIds) //<- assuing GetUsersByIds returns List<Result<T>>
   .Traverse();
+`````
+
+#### Tap
+The Tap method allows you to execute a side-effect action (such as logging, auditing, or notifications) when the result is successful, without modifying the result value or the flow of the chain. Useful for fire-and-forget scenarios on the success path.
+`````csharp
+Result<string> result = ValidateNewAccount(account)
+  .Tap(acc => LogSuccess(acc));
+`````
+#### TapError
+The TapError method allows you to execute a side-effect action (such as logging, auditing, or notifications) when the result is a failure, without modifying the result value or the flow of the chain. Useful for fire-and-forget scenarios on the error path.
+`````csharp
+Result<string> result = ValidateNewAccount(account)
+  .TapError(errors => LogErrors(errors));
 `````
 
 #### UseSuccessHttpStatusCode
