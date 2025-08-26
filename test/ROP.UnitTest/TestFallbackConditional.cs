@@ -9,8 +9,8 @@ namespace ROP.UnitTest
         public void TestFallbackConditional_ConditionMet_ExecutesFallback()
         {
             var result = MetodoOriginal(1)
-                .Bind(MetodoQueFalla)
-                .Fallback(r => !r.Success, MetodoQueDevuelveNumeroDeMeses);
+                .Bind(_ => MetodoQueFalla())
+                .Fallback(r => !r.Success, _ => MetodoQueDevuelveNumeroDeMeses());
 
             Assert.True(result.Success);
             Assert.Equal(12, result.Value);
@@ -20,8 +20,8 @@ namespace ROP.UnitTest
         public void TestFallbackConditional_ConditionNotMet_DoesNotExecuteFallback()
         {
             var result = MetodoOriginal(1)
-                .Bind(MetodoQueFalla)
-                .Fallback(r => false, MetodoQueDevuelveNumeroDeMeses);
+                .Bind(_ => MetodoQueFalla())
+                .Fallback(r => false, _ => MetodoQueDevuelveNumeroDeMeses());
 
             Assert.False(result.Success);
             Assert.Equal("error", result.Errors[0].Message);
@@ -32,7 +32,7 @@ namespace ROP.UnitTest
         {
             var result = MetodoOriginal(2)
                 .Bind(MatodoQueMultiplica)
-                .Fallback(r => true, MetodoQueDevuelveNumeroDeMeses);
+                .Fallback(r => true, _ => MetodoQueDevuelveNumeroDeMeses());
 
             Assert.True(result.Success);
             Assert.Equal(4, result.Value);
@@ -41,10 +41,8 @@ namespace ROP.UnitTest
         [Fact]
         public async Task TestFallbackConditional_AsyncConditionMet_ExecutesFallback()
         {
-            int originalValue = 1;
-
-            var result = await MetodoQueFalla(originalValue).Async()
-                .Fallback(r => !r.Success, x => MetodoQueDevuelveNumeroDeMeses(x).Async())
+            var result = await MetodoQueFalla().Async()
+                .Fallback(r => !r.Success, _ => MetodoQueDevuelveNumeroDeMeses().Async())
                 .Bind(MatodoQueMultiplica);
 
             Assert.True(result.Success);
@@ -58,7 +56,7 @@ namespace ROP.UnitTest
 
             var result = MetodoOriginal(1)
                 .Bind(_ => MetodoQueFallaConErrorCode(codeToFallback))
-                .Fallback(r => r.Errors[0].ErrorCode == codeToFallback, MetodoQueDevuelveNumeroDeMeses);
+                .Fallback(r => r.Errors[0].ErrorCode == codeToFallback, _ => MetodoQueDevuelveNumeroDeMeses());
 
             Assert.True(result.Success);
             Assert.Equal(12, result.Value);
@@ -72,7 +70,7 @@ namespace ROP.UnitTest
 
             var resultNoFallback = MetodoOriginal(1)
                 .Bind(_ => MetodoQueFallaConErrorCode(codeToNotFallback))
-                .Fallback(r => r.Errors[0].ErrorCode == codeToFallback, MetodoQueDevuelveNumeroDeMeses);
+                .Fallback(r => r.Errors[0].ErrorCode == codeToFallback, _ => MetodoQueDevuelveNumeroDeMeses());
 
             Assert.False(resultNoFallback.Success);
             Assert.Equal("error", resultNoFallback.Errors[0].Message);
@@ -84,7 +82,7 @@ namespace ROP.UnitTest
             return i;
         }
 
-        private Result<int> MetodoQueFalla(int i)
+        private Result<int> MetodoQueFalla()
         {
             return Result.Failure<int>("error");
         }
@@ -99,7 +97,7 @@ namespace ROP.UnitTest
             return i * i;
         }
 
-        private Result<int> MetodoQueDevuelveNumeroDeMeses(int i)
+        private Result<int> MetodoQueDevuelveNumeroDeMeses()
         {
             return 12;
         }
