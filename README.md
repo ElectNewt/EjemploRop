@@ -191,6 +191,18 @@ return ValidateNewAccount(account)
   .Bind(SendCode);
 ````
 
+#### Fallback (condicional)
+The `Fallback` method is executed when the previous method has a failure response **and** a custom condition is met (for example, a specific error code). 
+- If the condition is not met, the original Result is preserved.
+
+Example:
+````csharp
+// Fallback only if the ErrorCode matches the expected one
+var codeToFallback = Guid.NewGuid();
+var result = MethodThatFailsWithErrorCode(codeToFallback)
+    .Fallback(r => r.Errors[0].ErrorCode == codeToFallback, _ => AlternativeMethod());
+````
+
 #### Combine
 
 Allows you to combine two different responses
