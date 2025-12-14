@@ -3,7 +3,7 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <PackageId>Netmentor.ROP</PackageId>
-    <Version>2.0.0</Version>
+    <Version>2.1.0</Version>
     <Authors>Ivan Abad  </Authors>
     <Company>NetMentor</Company>
     <Description>Library to handle errors in C# in a more functional way in Railway oriented programming. based on Scott Wlaschin's Idea. </Description>
