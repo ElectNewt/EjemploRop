@@ -25,7 +25,7 @@ namespace ROP.UnitTest
         }
 
         [Fact]
-        public async Task WhenSuccess_andToResultOrProblemDetails_ReturnObject()
+        public async Task WhenSuccess_andToValueOrProblemDetails_ReturnObject()
         {
             int originalValue = 1234;
             IActionResult apiResult = await originalValue.Success().Async().ToValueOrProblemDetails();
@@ -37,7 +37,7 @@ namespace ROP.UnitTest
         }
 
         [Fact]
-        public async Task WhenErrorWithOnlyMessage_andToResultOrProblemDetails_ReturnProblemDetailsWithNoErrorCode()
+        public async Task WhenErrorWithOnlyMessage_andToValueOrProblemDetails_ReturnProblemDetailsWithNoErrorCode()
         {
             string originalErrorValue = "error";
             IActionResult apiResult =
@@ -58,7 +58,7 @@ namespace ROP.UnitTest
         }
 
         [Fact]
-        public async Task WhenErrorWithError_andToResultOrProblemDetails_ReturnProblemDetails()
+        public async Task WhenErrorWithError_andToValueOrProblemDetails_ReturnProblemDetails()
         {
             Error originalErrorValue = Error.Create("ErrorMessage", Guid.NewGuid());
             IActionResult apiResult =
