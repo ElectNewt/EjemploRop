@@ -234,7 +234,7 @@ Result<NetMentorAccount> result = ValidateNewAccount(account)
 ````
 
 #### Then
-The Then method allows you to execute an additional method in the chain, but the result of that method is ignored and the original value is preserved *only if no error occurs*. If the method passed to Then returns an error, the chain is cut and the error is propagated, just like with Bind.
+The Then method allows you to execute an additional method in the chain, but the result of that method is ignored and the original value is preserved *only if no error occurs*. If the method passed to Then returns an error, the chain is cut and the error is propagated, just likeï¿½withï¿½Bind.
 ````csharp
 Result<Unit> result = ValidateNewAccount(account)
   .Bind(SaveUser) 
@@ -334,13 +334,13 @@ During the execution of `.ToActionResult()` result gets converted into a `Data T
 
 
 ### ProblemDetails
-if what you are looking for is convert any non success Status Code into a [ProblemDetails](https://datatracker.ietf.org/doc/html/rfc9457) object you can do it with `.ToResultOrProblemDetails`:
+if what you are looking for is convert any non success Status Code into a [ProblemDetails](https://datatracker.ietf.org/doc/html/rfc9457) object you can do it with `.ToValueOrProblemDetails`:
 
 ````chsarp
 public async Task<IActionResult> CreateNewAccount(Account account)
 {
   return await _useCase.Execute(account)
-    .ToResultOrProblemDetails();
+    .ToValueOrProblemDetails();
 }
 ````
 
@@ -467,4 +467,3 @@ You also have the option to name the tuples `SendCode((string UserEmail, string 
 ## Issues and contributing
 
 Please do not hesitate in adding some issue or contribute in the code.
-

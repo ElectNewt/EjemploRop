@@ -17,7 +17,7 @@ namespace ROP.APIExtensions
         /// </summary>
         /// <typeparam name="T">The type of the value in the result.</typeparam>
         /// <param name="result">The result to convert.</param>
-        /// <returns>Returns a ResultDto of T. If you want to return T or ProblemDetails in case of an error, use ToResultOrProblemDetails.</returns>
+        /// <returns>Returns a ResultDto of T. If you want to return T or ProblemDetails in case of an error, use ToValueOrProblemDetails.</returns>
         public static IActionResult ToActionResult<T>(this Result<T> result)
         {
             return result.ToDto().ToHttpStatusCode(result.HttpStatusCode);
@@ -29,7 +29,7 @@ namespace ROP.APIExtensions
         /// </summary>
         /// <typeparam name="T">The type of the value in the result.</typeparam>
         /// <param name="result">The result to convert.</param>
-        /// <returns>Returns a ResultDto of T. If you want to return T or ProblemDetails in case of an error, use ToResultOrProblemDetails.</returns>
+        /// <returns>Returns a ResultDto of T. If you want to return T or ProblemDetails in case of an error, use ToValueOrProblemDetails.</returns>
         public static async Task<IActionResult> ToActionResult<T>(this Task<Result<T>> result)
         {
             Result<T> r = await result;
