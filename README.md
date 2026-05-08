@@ -234,7 +234,7 @@ Result<NetMentorAccount> result = ValidateNewAccount(account)
 ````
 
 #### Then
-The Then method allows you to execute an additional method in the chain, but the result of that method is ignored and the original value is preserved *only if no error occurs*. If the method passed to Then returns an error, the chain is cut and the error is propagated, just like�with�Bind.
+The Then method allows you to execute an additional method in the chain, but the result of that method is ignored and the original value is preserved *only if no error occurs*. If the method passed to Then returns an error, the chain is cut and the error is propagated, just like with Bind.
 ````csharp
 Result<Unit> result = ValidateNewAccount(account)
   .Bind(SaveUser) 
