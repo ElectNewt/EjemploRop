@@ -29,6 +29,15 @@ namespace ROP
         public static Result<T> NotFound<T>(Guid errorCode) => NotFound<T>(Error.Create(errorCode));
 
         /// <summary>
+        /// Converts the type into the error flow with HttpStatusCode.NotFound using a compact
+        /// numeric <see cref="Error.ApiCode"/> as discriminator. Useful for APIs that need a
+        /// machine-readable code (e.g. 40401) in the HTTP response instead of a Guid.
+        /// </summary>
+        /// <param name="apiCode">Compact numeric code exposed as discriminator in the HTTP response.</param>
+        /// <param name="message">Human-readable error message.</param>
+        public static Result<T> NotFound<T>(int apiCode, string message) => new Result<T>(ImmutableArray.Create(Error.Create(apiCode, message)), HttpStatusCode.NotFound);
+
+        /// <summary>
         /// Converts the type into the error flow with  HttpStatusCode.NotFound
         /// </summary>
         public static Result<Unit> NotFound(ImmutableArray<Error> errors) => new Result<Unit>(errors, HttpStatusCode.NotFound);
@@ -54,5 +63,14 @@ namespace ROP
         /// </summary>
         public static Result<Unit> NotFound(Guid errorCode, string[] translationVariables = null) =>
             NotFound<Unit>(Error.Create(errorCode, translationVariables));
+
+        /// <summary>
+        /// Converts the type into the error flow with HttpStatusCode.NotFound using a compact
+        /// numeric <see cref="Error.ApiCode"/> as discriminator. Useful for APIs that need a
+        /// machine-readable code (e.g. 40401) in the HTTP response instead of a Guid.
+        /// </summary>
+        /// <param name="apiCode">Compact numeric code exposed as discriminator in the HTTP response.</param>
+        /// <param name="message">Human-readable error message.</param>
+        public static Result<Unit> NotFound(int apiCode, string message) => NotFound<Unit>(Error.Create(apiCode, message));
     }
 }

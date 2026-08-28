@@ -284,13 +284,27 @@ But as mentioned, this only matters if you are using API.
 
 ### The Error type
 
-For the errors, we also created a type. This type contains three properties.
-- `ErorMessage` allows you to introduce a message for the errors.
-- `ErrorCode` Code set by you in your application which references the error. 
-  
+For the errors, we also created a type. This type contains four properties.
+- `Message` allows you to introduce a message for the errors.
+- `ErrorCode` Code set by you in your application which references the error.
+- `ApiCode` Optional compact numeric code to expose to API clients as a machine-readable discriminator (independent from `ErrorCode`).
+- `TranslationVariables` Variables used when the error message has placeholders in its translation.
+
 To create the errors you have to use the factory method: `Error  Create(string message, Guid? errorCode = null)`.
-  
+
 But when you do `Result.Failure<T>("errorMessage")` it creates the error automatically.
+
+#### ErrorCode vs ApiCode
+`Error` exposes two distinct fields for two distinct purposes:
+
+- **`ErrorCode` (Guid)** — translation key. Consumed by `ROP.ApiExtensions.Translations` to look up the localized message from the configured `.resx` based on the `Accept-Language` header.
+- **`ApiCode` (int?)** — optional compact numeric discriminator exposed to API clients. Use it when the consumer needs to switch on a stable code instead of parsing the message text.
+
+They are independent: an error can carry only `ErrorCode`, only `ApiCode`, or both. `ApiCode` is serialized into the HTTP response only when populated.
+
+```csharp
+Error.Create(apiCode: 42201, message: "The password must be at least 8 characters long.");
+```
 
 #### Error status codes
 As there is a possibility with `UseSuccessHttpStatusCode` of setting up a success status code, there is also a way to set up a failure status code.
@@ -327,6 +341,31 @@ public async Task<IActionResult> CreateNewAccount(Account account)
 }
 ````
 If `Result` is a success, it will return the status code set with `UseSuccessHttpStatusCode` (or the default 422 if not set), and if the `Result` is not successful, it will return the one set when you specified the error.
+
+#### ApiCode catalog pattern
+A common pattern is to keep a catalog of `ApiCode` per module so your clients can switch on a stable numeric code instead of parsing the message:
+
+```csharp
+public static class AccountErrorCodes
+{
+    public static readonly Error PasswordTooShort =
+        Error.Create(apiCode: 42201, message: "The password must be at least 8 characters long.");
+
+    public static readonly Error InvalidCredentials =
+        Error.Create(apiCode: 42202, message: "Invalid credentials.");
+
+    public static readonly Error InvalidEmailFormat =
+        Error.Create(apiCode: 42203, message: "The email format is invalid.");
+
+    public static readonly Error EmailNotConfirmed =
+        Error.Create(apiCode: 42204, message: "The email has not been confirmed.");
+}
+
+// In your handler
+return Result.BadRequest<Account>(AccountErrorCodes.InvalidCredentials);
+```
+
+All these errors share the same HTTP status code (BadRequest), so the `apiCode` is what lets the client tell them apart. The resulting JSON exposes `"apiCode": 42202`, which the client can switch on with a native enum.
 
 #### ResultDto
 During the execution of `.ToActionResult()` result gets converted into a `Data Transfer Object` (Dto) for that reason it returns a `ResultDto`.
