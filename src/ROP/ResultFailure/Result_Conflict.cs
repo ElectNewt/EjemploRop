@@ -29,6 +29,15 @@ namespace ROP
         public static Result<T> Conflict<T>(Guid errorCode) => Conflict<T>(Error.Create(errorCode));
 
         /// <summary>
+        /// Converts the type into the error flow with HttpStatusCode.Conflict using a compact
+        /// numeric <see cref="Error.ApiCode"/> as discriminator. Useful for APIs that need a
+        /// machine-readable code (e.g. 42201) in the HTTP response instead of a Guid.
+        /// </summary>
+        /// <param name="apiCode">Compact numeric code exposed as discriminator in the HTTP response.</param>
+        /// <param name="message">Human-readable error message.</param>
+        public static Result<T> Conflict<T>(int apiCode, string message) => new Result<T>(ImmutableArray.Create(Error.Create(apiCode, message)), HttpStatusCode.Conflict);
+
+        /// <summary>
         /// Converts the type into the error flow with  HttpStatusCode.Conflict
         /// </summary>
         public static Result<Unit> Conflict(ImmutableArray<Error> errors) => new Result<Unit>(errors, HttpStatusCode.Conflict);
@@ -47,10 +56,19 @@ namespace ROP
         /// Converts the type into the error flow with  HttpStatusCode.Conflict
         /// </summary>
         public static Result<Unit> Conflict(string error) => new Result<Unit>(ImmutableArray.Create(Error.Create(error)), HttpStatusCode.Conflict);
-        
+
         /// <summary>
         /// Converts the type into the error flow with  HttpStatusCode.Conflict
         /// </summary>
         public static Result<Unit> Conflict(Guid errorCode, string[] translationVariables = null) => Conflict<Unit>(Error.Create(errorCode, translationVariables));
+
+        /// <summary>
+        /// Converts the type into the error flow with HttpStatusCode.Conflict using a compact
+        /// numeric <see cref="Error.ApiCode"/> as discriminator. Useful for APIs that need a
+        /// machine-readable code (e.g. 42201) in the HTTP response instead of a Guid.
+        /// </summary>
+        /// <param name="apiCode">Compact numeric code exposed as discriminator in the HTTP response.</param>
+        /// <param name="message">Human-readable error message.</param>
+        public static Result<Unit> Conflict(int apiCode, string message) => Conflict<Unit>(Error.Create(apiCode, message));
     }
 }

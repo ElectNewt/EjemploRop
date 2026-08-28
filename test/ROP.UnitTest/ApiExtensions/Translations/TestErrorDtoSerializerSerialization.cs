@@ -81,6 +81,77 @@ namespace ROP.UnitTest.ApiExtensions.Translations
             Assert.Equal("message translated with variable of value 1 and a second one 2", resultDto.Errors.First().Message);
         }
 
+        [Fact]
+        public void When_ApiCode_is_present_then_roundtrip_preserves_it()
+        {
+            JsonSerializerOptions serializeOptions = GetSerializerOptions();
+
+            ResultDto<Unit> obj = new ResultDto<Unit>()
+            {
+                Value = null,
+                Errors = new List<ErrorDto>()
+                {
+                    new ErrorDto()
+                    {
+                        Message = "example message",
+                        ApiCode = 42201
+                    }
+                }.ToImmutableArray()
+            };
+
+            string json = JsonSerializer.Serialize(obj, serializeOptions);
+            var resultDto = JsonSerializer.Deserialize<ResultDto<Unit>>(json);
+            Assert.Equal(42201, resultDto.Errors.First().ApiCode);
+        }
+
+        [Fact]
+        public void When_ApiCode_is_absent_then_json_omits_field_and_roundtrips_to_null()
+        {
+            JsonSerializerOptions serializeOptions = GetSerializerOptions();
+
+            ResultDto<Unit> obj = new ResultDto<Unit>()
+            {
+                Value = null,
+                Errors = new List<ErrorDto>()
+                {
+                    new ErrorDto()
+                    {
+                        Message = "example message"
+                    }
+                }.ToImmutableArray()
+            };
+
+            string json = JsonSerializer.Serialize(obj, serializeOptions);
+            Assert.DoesNotContain("apiCode", json);
+            var resultDto = JsonSerializer.Deserialize<ResultDto<Unit>>(json);
+            Assert.Null(resultDto.Errors.First().ApiCode);
+        }
+
+        [Fact]
+        public void When_both_ErrorCode_and_ApiCode_are_present_then_roundtrip_preserves_both()
+        {
+            JsonSerializerOptions serializeOptions = GetSerializerOptions();
+
+            ResultDto<Unit> obj = new ResultDto<Unit>()
+            {
+                Value = null,
+                Errors = new List<ErrorDto>()
+                {
+                    new ErrorDto()
+                    {
+                        Message = "example message",
+                        ErrorCode = ErrorTranslations.ErrorExample,
+                        ApiCode = 42201
+                    }
+                }.ToImmutableArray()
+            };
+
+            string json = JsonSerializer.Serialize(obj, serializeOptions);
+            var resultDto = JsonSerializer.Deserialize<ResultDto<Unit>>(json);
+            Assert.Equal(ErrorTranslations.ErrorExample, resultDto.Errors.First().ErrorCode);
+            Assert.Equal(42201, resultDto.Errors.First().ApiCode);
+        }
+
         private JsonSerializerOptions GetSerializerOptions()
         {
             Mock<IHeaderDictionary> mockHeader = new Mock<IHeaderDictionary>();

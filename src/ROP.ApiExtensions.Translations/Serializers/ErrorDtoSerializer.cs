@@ -40,6 +40,7 @@ namespace ROP.ApiExtensions.Translations.Serializers
             string errorMessage = null;
             string[] translationVariables = null;
             Guid errorCode = Guid.NewGuid();
+            int? apiCode = null;
 
             while (reader.Read())
             {
@@ -58,13 +59,22 @@ namespace ROP.ApiExtensions.Translations.Serializers
                 if (propertyName == nameof(ErrorDto.ErrorCode))
                 {
                     reader.Read();
-                    errorCode = Guid.Parse(reader.GetString() ?? string.Empty);
+                    if (Guid.TryParse(reader.GetString(), out Guid parsedErrorCode))
+                    {
+                        errorCode = parsedErrorCode;
+                    }
                 }
 
                 if (propertyName == nameof(ErrorDto.Message))
                 {
                     reader.Read();
                     errorMessage = reader.GetString();
+                }
+
+                if (propertyName == nameof(Error.ApiCode))
+                {
+                    reader.Read();
+                    apiCode = reader.GetInt32();
                 }
 
                 if (propertyName == nameof(Error.TranslationVariables))
@@ -85,6 +95,7 @@ namespace ROP.ApiExtensions.Translations.Serializers
             return new ErrorDto()
             {
                 ErrorCode = errorCode,
+                ApiCode = apiCode,
                 Message = String.Format(errorMessage, translationVariables ?? new string[0])
             };
         }
@@ -102,16 +113,22 @@ namespace ROP.ApiExtensions.Translations.Serializers
             {
                 CultureInfo language = _httpContextAccessor.HttpContext.Request.Headers.GetCultureInfo();
                 errorMessageValue = LocalizationUtils<TTranslationFile>.GetValue(value.ErrorCode.ToString(), language);
-                
+
                 if (value.TranslationVariables != null)
                 {
                     errorMessageValue = string.Format(errorMessageValue, (string[])value.TranslationVariables);
                 }
             }
-            
+
             writer.WriteStartObject();
-            writer.WriteString(nameof(Error.ErrorCode), value.ErrorCode.ToString());
+            writer.WriteString(nameof(Error.ErrorCode), value.ErrorCode?.ToString());
             writer.WriteString(nameof(Error.Message), errorMessageValue);
+
+            if (value.ApiCode.HasValue)
+            {
+                writer.WriteNumber(nameof(Error.ApiCode), value.ApiCode.Value);
+            }
+
             writer.WritePropertyName(nameof(Error.TranslationVariables));
             JsonSerializer.Serialize(writer, value.TranslationVariables ?? Array.Empty<string>(), options);
             writer.WriteEndObject();

@@ -6,6 +6,7 @@
             => new ErrorDto()
             {
                 ErrorCode = error.ErrorCode,
+                ApiCode = error.ApiCode,
                 Message = error.Message,
                 TranslationVariables = error.TranslationVariables
             };
